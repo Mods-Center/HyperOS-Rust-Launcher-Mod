@@ -7,6 +7,18 @@ A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, ba
 > patches of the compiled Dart and Rust code, plus a small native helper (`libkashidock.so`) that reads the settings
 > written by HyperLauncherExt.
 
+## Screenshots
+<img width="1184" height="2547" alt="1001119836" src="https://github.com/user-attachments/assets/ebc307e2-e53e-467a-a462-b919fb941720" />
+<img width="1184" height="2547" alt="1001119837" src="https://github.com/user-attachments/assets/1667bea4-917d-4eb6-8e7e-e75e742afac1" />
+<img width="1184" height="2547" alt="1001119835" src="https://github.com/user-attachments/assets/2bcffe04-7fce-4426-a0ef-98cbc5dc3938" />
+<img width="1184" height="2547" alt="1001119834" src="https://github.com/user-attachments/assets/d1f05c59-1243-46d4-8648-5f309d3ebe4c" />
+<img width="1184" height="2547" alt="1001119843" src="https://github.com/user-attachments/assets/78c71228-fdf2-4a72-8d9f-0c5ce7519bcf" />
+<img width="1184" height="2547" alt="1001119840" src="https://github.com/user-attachments/assets/111b8de8-4310-4379-bb3c-38dca40daadb" />
+<img width="1184" height="2547" alt="1001119842" src="https://github.com/user-attachments/assets/e3907855-97d8-481f-86f8-cd381ddba73f" />
+<img width="1184" height="2547" alt="1001119841" src="https://github.com/user-attachments/assets/03b21a37-5c37-4444-bb30-ed7739499dd9" />
+<img width="1184" height="2547" alt="1001119839" src="https://github.com/user-attachments/assets/e4ad1a00-62c3-412d-ac3a-a6efe21bf90c" />
+<img width="1184" height="2547" alt="1001119838" src="https://github.com/user-attachments/assets/3d0a07d4-989d-463f-a7dd-9df58ae6a250" />
+
 ## Features
 
 ### Dock
