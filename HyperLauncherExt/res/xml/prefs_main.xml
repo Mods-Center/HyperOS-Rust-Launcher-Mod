@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  HyperLauncherExt main page. Rendered by prefs/PrefScreen.java (see its javadoc for every element and attribute).
+  key = Settings.System key read by the launcher helper (libkashidock.so). Add a row here, no Java needed;
+  rows that run code use action="id" (register the id in modules/Modules.java).
+  requires="root": shown only once root is granted; otherwise replaced by a "needs root" row that asks for it
+  requires="theme": like root, but also shown when the ROM lets this app write /data/system/theme (icon packs)
+  (only matters when the app runs as a system/priv-app without the root permission screen).
+-->
+<PreferenceScreen title="HyperLauncherExt" summary="@string/m_hyperos_4_launcher_tweaks_sum">
+
+    <PreferenceCategory title="@string/m_dock">
+        <SwitchPreference key="kashi_dock_enable" title="@string/m_add_a_dock_to"
+            summary="@string/m_launcher_drawn_background_behind_sum" defaultValue="true" />
+        <SwitchPreference controls="kashi_dock_icon_offset" title="@string/m_dock_icon_vertical_offset"
+            summary="@string/m_negative_moves_the_icons_sum" />
+        <SeekBarPreference key="kashi_dock_icon_offset" title="@string/m_icon_offset" min="-60" max="30" defaultValue="0"
+            zeroAs="1" unit=" dp" format="signed" dependency="@kashi_dock_icon_offset" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_dock_background" dependency="kashi_dock_enable">
+        <DropDownPreference key="kashi_dock_style" title="@string/m_background_material"
+            entries="@string/m_system_default_soft_glass_list" entryValues="0|1|2" defaultValue="1" />
+        <SeekBarPreference key="kashi_dock_padding" title="@string/m_horizontal_margin" min="0" max="150" defaultValue="25" unit=" dp" />
+        <SeekBarPreference key="kashi_dock_radius" title="@string/m_corner_radius" min="0" max="60" defaultValue="30" unit=" dp" />
+        <SeekBarPreference key="kashi_dock_height" title="@string/m_height" min="-40" max="150" defaultValue="0" unit=" dp" format="signed" />
+        <SeekBarPreference key="kashi_indicator_offset" title="@string/m_space_below_search_capsule" min="-40" max="80" defaultValue="0" unit=" dp" format="signed"
+            summary="@string/m_lifts_the_search_capsule_sum" />
+        <SeekBarPreference key="kashi_grid_gap" title="@string/m_space_above_search_capsule" min="0" max="80" defaultValue="0" unit=" dp"
+            summary="@string/m_ends_the_icon_grid_sum" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_home_screen">
+        <SwitchPreference key="kashi_hide_any_app" title="@string/m_hide_any_app"
+            summary="@string/m_lists_every_app_on_sum" defaultValue="true" />
+        <Preference title="@string/m_hide_apps" summary="@string/m_choose_which_app_icons_sum"
+            component="com.miui.home/com.miui.home.settings.AllHideAppActivity" dependency="kashi_hide_any_app" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_recents">
+        <SeekBarPreference key="kashi_recents_blur" title="@string/m_background_blur_strength" min="0" max="300" defaultValue="100" unit="%"
+            summary="@string/m_100_is_the_stock_sum" />
+        <SwitchPreference key="kashi_recents_hide_clear" title="@string/m_hide_the_clear_all" defaultValue="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_search_bar">
+        <Preference action="search_app" title="@string/m_search_app"
+            summary="@string/m_opened_by_the_search_sum" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_widgets">
+        <SwitchPreference key="kashi_widget_resize" title="@string/m_free_widget_resizing"
+            summary="@string/m_every_app_widget_can_sum" defaultValue="true" />
+        <DropDownPreference key="kashi_widget_source" title="@string/m_widget_picker_app_vault"
+            summary="@string/m_which_app_vault_the_sum"
+            entries="@string/m_auto_rom_miui_app_list" entryValues="0|1|2" defaultValue="0" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_soft_glass">
+        <Preference title="@string/m_home_screen_glass" summary="@string/m_soft_glass_of_widgets_sum"
+            page="prefs_glass" args="prefix=kashi_glass_home_;name=home" action="glass_state" prefix="kashi_glass_home_" />
+        <Preference title="@string/m_dock_glass" summary="@string/m_dock_background_when_its_sum"
+            page="prefs_glass" args="prefix=kashi_glass_dock_;name=dock" action="glass_state" prefix="kashi_glass_dock_" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_icons">
+        <Preference title="@string/m_icon_size_and_style" summary="@string/m_the_launcher_s_own_sum"
+            component="com.miui.home/com.miui.home.settings.IconCustomizeActivity" />
+        <SwitchPreference controls="kashi_icon_bigger" title="@string/m_icons_larger_than_the"
+            summary="@string/m_enlarges_home_screen_and_sum" />
+        <SeekBarPreference key="kashi_icon_bigger" title="@string/m_extra_size" min="0" max="15" defaultValue="0"
+            zeroAs="10" unit="%" format="signed" dependency="@kashi_icon_bigger" />
+        <SwitchPreference key="kashi_icon_effect" title="@string/m_icon_highlight_on_all"
+            summary="@string/m_give_third_party_icons_sum" defaultValue="true" />
+        <Preference action="icon_pack" title="@string/m_icon_pack" summary="@string/m_apply_an_installed_icon_sum" requires="theme" />
+        <Preference action="icon_pack_refresh" title="@string/m_refresh_icon_pack" summary="@string/m_rebuild_the_applied_pack_sum" requires="theme" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_performance">
+        <SwitchPreference key="kashi_full_anim" title="@string/m_full_animations_on_every"
+            summary="@string/m_ignore_lite_and_low_sum" defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_about">
+        <Preference action="version" title="HyperLauncherExt" summary="@string/m_settings_for_the_patched_sum" />
+        <Preference title="Modified by 🅺🅰🆂🅷🅸" summary="@kakashi1v1" url="https://t.me/kakashi1v1" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_credits">
+        <Preference title="HyperChanger" url="https://github.com/ColdP/HyperChanger"
+            summary="@string/m_by_coldp_reference_and_sum" />
+    </PreferenceCategory>
+
+    <Preference action="diagnostics" title="@string/m_diagnostics" summary="@string/m_helper_log_and_settings_sum" />
+</PreferenceScreen>

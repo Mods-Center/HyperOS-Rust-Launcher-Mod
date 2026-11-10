@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Soft glass sub page, opened twice with args prefix=kashi_glass_home_ / kashi_glass_dock_ and name=home / dock.
+  Values are relative to the system glass: blur 100% = stock, other parameters 0% = stock.
+-->
+<PreferenceScreen title="@string/g_soft_glass" summary="@string/g_changes_are_relative_to_sum">
+    <SwitchPreference key="${prefix}on" title="@string/g_custom_soft_glass" defaultValue="false" />
+
+    <PreferenceCategory title="@string/g_parameters" dependency="${prefix}on">
+        <SeekBarPreference key="${prefix}blur" title="@string/g_glass_blur" min="0" max="200" defaultValue="100" unit="%" />
+        <SeekBarPreference key="${prefix}luminance" title="@string/g_luminance_blend" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}saturation" title="@string/g_material_saturation" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}brightness" title="@string/g_blend_brightness" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}alpha" title="@string/g_inner_opacity" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}refraction" title="@string/g_refraction_index" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}thickness" title="@string/g_optical_thickness" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}bg_saturation" title="@string/g_background_saturation" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}bg_brightness" title="@string/g_background_brightness" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}burn" title="@string/g_background_burn" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}edge" title="@string/g_edge_width" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}edge_feather" title="@string/g_edge_feather" min="-200" max="100" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}reflection_offset" title="@string/g_reflection_offset" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}light" title="@string/g_highlight_strength" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+        <SeekBarPreference key="${prefix}darker" title="@string/g_darken_strength" min="-100" max="200" defaultValue="0" unit="%" format="signed" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/g_presets">
+        <Preference action="glass_export" title="@string/g_export" summary="@string/g_save_these_glass_settings_sum" prefix="${prefix}" name="${name}" />
+        <Preference action="glass_import" title="@string/g_import" summary="@string/g_apply_a_preset_exported_sum" prefix="${prefix}" name="${name}" />
+    </PreferenceCategory>
+
+    <Preference action="glass_reset" title="@string/g_reset_parameters" summary="@string/g_back_to_the_system_sum" prefix="${prefix}" />
+</PreferenceScreen>

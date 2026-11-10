@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  HyperLauncherExt (com.miui.home.kashi.ext) - privileged permission allowlist.
+
+  Install together with the APK on the SAME partition, for example:
+    /system/priv-app/HyperLauncherExt/HyperLauncherExt.apk
+    /system/etc/permissions/privapp-permissions-com.miui.home.kashi.ext.xml
+  (or /product/priv-app/... with /product/etc/permissions/..., /system_ext/priv-app/... with /system_ext/etc/permissions/...)
+
+  Files: 0644 root:root, folders 0755 root:root, SELinux context u:object_r:system_file:s0.
+
+  Every privileged permission requested in the manifest must be listed here, otherwise ROMs that
+  enforce the allowlist (ro.control_privapp_permissions=enforce) refuse to boot.
+-->
+<permissions>
+    <privapp-permissions package="com.miui.home.kashi.ext">
+        <!-- restart the launcher (am force-stop) without root -->
+        <permission name="android.permission.FORCE_STOP_PACKAGES" />
+        <!-- Diagnostics: read the launcher helper log without root -->
+        <permission name="android.permission.READ_LOGS" />
+        <!-- icon packs without root (ROMs that allow writing /data/system/theme): clear the launcher cache -->
+        <permission name="android.permission.DELETE_CACHE_FILES" />
+    </privapp-permissions>
+</permissions>

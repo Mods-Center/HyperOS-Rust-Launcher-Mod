@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Privileged permissions requested by the patched HyperOS 4 launcher (com.miui.home 8.01.02.9239).
+     Shipped so ROMs that enforce the privapp allowlist do not refuse to boot. -->
+<permissions>
+    <privapp-permissions package="com.miui.home">
+        <permission name="android.miui.permission.SHELL" />
+        <permission name="android.permission.ACCESS_CONTEXTUAL_SEARCH" />
+        <permission name="android.permission.ALLOW_SLIPPERY_TOUCHES" />
+        <permission name="android.permission.BIND_APPWIDGET" />
+        <permission name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS" />
+        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
+        <permission name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS" />
+        <permission name="android.permission.DELETE_PACKAGES" />
+        <permission name="android.permission.DUMP" />
+        <permission name="android.permission.INTERACT_ACROSS_USERS" />
+        <permission name="android.permission.MANAGE_USERS" />
+        <permission name="android.permission.MEDIA_CONTENT_CONTROL" />
+        <permission name="android.permission.PACKAGE_USAGE_STATS" />
+        <permission name="android.permission.REAL_GET_TASKS" />
+        <permission name="android.permission.START_TASKS_FROM_RECENTS" />
+        <permission name="android.permission.STATUS_BAR" />
+        <permission name="android.permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE" />
+        <permission name="android.permission.UPDATE_APP_OPS_STATS" />
+        <permission name="android.permission.WRITE_SECURE_SETTINGS" />
+        <permission name="com.android.provision.provider.READ_PROVIDER" />
+        <permission name="com.android.settings.permission.CLOUD_SETTINGS_PROVIDER" />
+        <permission name="com.android.systemui.permission.NOTIFICATION" />
+        <permission name="com.miui.notes.permission.ACCESS_NOTE" />
+        <permission name="com.miui.securitycenter.POWER_CENTER_COMMON_PERMISSION" />
+        <permission name="com.miui.securitycenter.permission.ACCESS_SECURITY_CENTER_PROVIDER" />
+        <permission name="com.miui.securitycenter.permission.WIDGET_PROVIDER" />
+        <permission name="com.miui.securitycore.permission.XSPACE_DUAL" />
+        <permission name="com.xiaomi.dist.permission.ACCESS_HANDOFF_CONTROL" />
+        <permission name="com.xiaomi.mirror.permission.MIRROR_DEVICE_CHANGED" />
+        <permission name="com.xiaomi.mirror.permission.MIRROR_PIN_APP_CHANGED" />
+        <permission name="miui.autoinstall.config.permission.AUTOINSTALL" />
+        <permission name="miui.permission.ACCESS_ALARM_PROVIDER" />
+        <permission name="miui.permission.APP_PREDICT_VERIFY" />
+        <permission name="miui.permission.EXTRA_NETWORK" />
+        <permission name="miui.permission.READ_AND_WIRTE_PERMISSION_MANAGER" />
+        <permission name="miui.permission.USE_INTERNAL_GENERAL_API" />
+        <permission name="miui.permission.powerkeeper.HIDDEN_MODE_PROVIDER" />
+        <permission name="miui.personalassistant.ACCESS_PROVIDER" />
+    </privapp-permissions>
+</permissions>
