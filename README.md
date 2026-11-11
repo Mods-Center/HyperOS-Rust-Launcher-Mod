@@ -70,7 +70,9 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
 - Shortcut to the launcher's own icon size and style page
 
 ### Recents & performance
+- **Stack** recents layout on every device
 - Recents background blur strength (0-300%)
+- **Three-layer blur** (recents, app open/close) on every device while "Full animations" is on
 - Hide the clear-all button
 - **Full animations on every device**: lite and low-end device checks removed
 
@@ -87,8 +89,11 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
 ## Requirements
 
 - **HyperOS 4** with the Rust/Flutter launcher, arm64. The module checks the version props and, because many ports
-  report the base ROM's version, also the HyperOS 4 launcher runtime (`hyos_spawner`, `libhyper_os_*`). If neither
+  report the base ROM's version, also the HyperOS 4 launcher runtime (`hyos_spawner`, `libhyper_os_*`, `libmisqlite3`,
+  `librust_maml_sdk`). If neither
   is found it asks before installing (Vol+ install / Vol- cancel).
+- **HyperOS 3 is not supported.** This launcher needs the HyperOS 4 Flutter engine and Rust runtime; on HyperOS 3
+  the module stops and asks before installing.
 - Magisk, KernelSU or APatch.
 - **Signature verification disabled** (core patch) on stock ROMs. The patched launcher can't carry Xiaomi's
   signature.

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Builds HyperLauncherExt.apk with the plain Android build tools (no Gradle):
-#   aapt2, javac (JDK 11+), d8, zipalign, keytool + jarsigner (or apksigner).
+#   aapt2, javac (JDK 11+), d8, zipalign, keytool, apksigner.
 #
 #   ANDROID_JAR  path to android.jar of API 35   (required)
 #   OUT          output APK                      (default: build/HyperLauncherExt.apk)
@@ -24,7 +24,9 @@ d8 --lib "$SDK" --min-api 29 --output build/dex $(find build/classes -name '*.cl
 (cd build/dex && zip -q ../base.apk classes.dex)
 [ -f "$KEYSTORE" ] || keytool -genkeypair -keystore "$KEYSTORE" -storepass "$KS_PASS" -keypass "$KS_PASS" -alias "$KS_ALIAS" \
     -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=HyperLauncherExt" >/dev/null 2>&1
-jarsigner -keystore "$KEYSTORE" -storepass "$KS_PASS" -keypass "$KS_PASS" -sigalg SHA256withRSA -digestalg SHA-256 \
-    build/base.apk "$KS_ALIAS" >/dev/null
+# v2/v3 signatures are required: with v1 only, installers fall back to the JAR (StrictJarFile) check, which some
+# core-patch modules break ("ArrayList cannot be cast to Certificate[]"). apksigner signs after zipalign.
 zipalign -f 4 build/base.apk build/aligned.apk
+apksigner sign --ks "$KEYSTORE" --ks-pass "pass:$KS_PASS" --key-pass "pass:$KS_PASS" --ks-key-alias "$KS_ALIAS" \
+    --v1-signing-enabled true --v2-signing-enabled true --v3-signing-enabled true build/aligned.apk
 mkdir -p "$(dirname "$OUT")"; cp build/aligned.apk "$OUT"; echo "built $OUT"

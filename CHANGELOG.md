@@ -16,6 +16,12 @@
 - Root detection works with more root managers (su outside PATH, KernelSU / APatch locations)
 - Icon packs: when the theme folder isn't writable without root, the row now says why (SELinux domain, folder
   permissions or missing rules)
+- Recents: the Stack layout can be chosen on every device (it was limited to high-end devices)
+- Three-layer blur (recents, app open/close) on every device while "Full animations" is on in HyperLauncherExt
+- HyperLauncherExt is signed with v1 + v2 + v3 signatures: fixes "INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION ...
+  ArrayList cannot be cast to Certificate[]" when installing it by hand on some ROMs / signature-bypass setups
+- Module: genuine HyperOS 3 no longer passes the HyperOS 4 runtime check (it now also needs libmisqlite3 and
+  librust_maml_sdk, which only HyperOS 4 has)
 - HyperLauncherExt 3.8.2
 
 ## v1.0

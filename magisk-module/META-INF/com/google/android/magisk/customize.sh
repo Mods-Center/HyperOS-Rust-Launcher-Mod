@@ -27,13 +27,16 @@ props_say_os4() {
     return 1
 }
 
+# Genuine HyperOS 3 also has hyos_spawner and libhyper_os_* (an older runtime), but not libmisqlite3 /
+# librust_maml_sdk, which this launcher links against: requiring them keeps HyperOS 3 from passing as HyperOS 4.
 rust_runtime_present() {
     spawner=""
     for d in /system_ext/bin /system/bin /system/system_ext/bin; do
         [ -e "$d/hyos_spawner" ] && spawner="$d/hyos_spawner"
     done
     [ -n "$spawner" ] || return 1
-    for lib in libhyper_os_flutter.so libhyper_os_app_public.so libhyper_os_ui_public.so libhyper_os_system_public.so; do
+    for lib in libhyper_os_flutter.so libmisqlite3.so librust_maml_sdk.so libhyper_os_app_public.so \
+               libhyper_os_ui_public.so libhyper_os_system_public.so; do
         found=0
         for d in /system_ext/lib64 /system/lib64 /system/system_ext/lib64; do
             [ -e "$d/$lib" ] && found=1
@@ -74,7 +77,7 @@ check_hyperos4() {
     ui_print " "
     ui_print "! Could not confirm HyperOS 4:"
     ui_print "  version props: $(getprop ro.mi.os.version.name) / $(getprop ro.build.version.incremental)"
-    ui_print "  HyperOS 4 launcher runtime (hyos_spawner, libhyper_os_*): not found"
+    ui_print "  HyperOS 4 launcher runtime (hyos_spawner, libhyper_os_*, libmisqlite3, librust_maml_sdk): not found"
     ui_print "  This launcher only runs on HyperOS 4. On other systems it will not start."
     ui_print " "
     ui_print "  Vol+ = install anyway      Vol- = cancel      (cancels in 20 s)"
