@@ -16,8 +16,24 @@ import com.miui.home.kashi.ext.modules.SearchModule;
 public class SearchActivity extends Activity {
     static final String ACTION_VOICE = "com.miui.home.kashi.ext.VOICE_GO";
 
+    private boolean launched;
+
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state);
+        overridePendingTransition(0, 0);
+    }
+
+    // Started from onResume: once this activity is the resumed top activity its app counts as foreground, so the
+    // system's 5 s app-switch protection (armed by the Home gesture) no longer queues the start of the target app.
+    // As a priv-app, STOP_APP_SWITCHES lifts it entirely.
+    @Override protected void onResume() {
+        super.onResume();
+        if (launched) return;
+        launched = true;
+        getWindow().getDecorView().post(this::open);
+    }
+
+    private void open() {
         boolean voice = ACTION_VOICE.equals(getIntent().getAction());
         String pkg = SearchModule.selected(this);
         Intent target = SearchModule.resolve(this, pkg, voice);

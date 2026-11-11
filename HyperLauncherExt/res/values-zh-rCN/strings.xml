@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">应用在本设备或其他设备上导出的预设</string>
     <string name="g_reset_parameters">重置参数</string>
     <string name="g_back_to_the_system_sum">恢复为系统数值</string>
+    <string name="search_default">桌面默认</string>
+    <string name="search_default_sub">使用桌面自带的搜索栏行为</string>
+    <string name="search_set_default">搜索栏已恢复桌面默认行为</string>
 </resources>

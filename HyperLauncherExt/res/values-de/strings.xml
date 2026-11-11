@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">Eine auf diesem oder einem anderen Gerät exportierte Voreinstellung anwenden</string>
     <string name="g_reset_parameters">Parameter zurücksetzen</string>
     <string name="g_back_to_the_system_sum">Zurück zu den Systemwerten</string>
+    <string name="search_default">Launcher-Standard</string>
+    <string name="search_default_sub">Eigenes Verhalten der Launcher-Suchleiste</string>
+    <string name="search_set_default">Die Suchleiste nutzt das Standardverhalten</string>
 </resources>

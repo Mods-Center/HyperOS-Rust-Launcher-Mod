@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">Áp dụng cấu hình sẵn đã xuất trên thiết bị này hoặc thiết bị khác</string>
     <string name="g_reset_parameters">Đặt lại thông số</string>
     <string name="g_back_to_the_system_sum">Trở về giá trị hệ thống</string>
+    <string name="search_default">Mặc định của launcher</string>
+    <string name="search_default_sub">Hành vi thanh tìm kiếm gốc của launcher</string>
+    <string name="search_set_default">Thanh tìm kiếm dùng hành vi mặc định</string>
 </resources>

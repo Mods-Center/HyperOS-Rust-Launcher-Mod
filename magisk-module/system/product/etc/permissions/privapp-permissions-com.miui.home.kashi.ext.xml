@@ -20,5 +20,7 @@
         <permission name="android.permission.READ_LOGS" />
         <!-- icon packs without root (ROMs that allow writing /data/system/theme): clear the launcher cache -->
         <permission name="android.permission.DELETE_CACHE_FILES" />
+        <!-- open the picked search app without the 5 s app-switch delay after the Home gesture -->
+        <permission name="android.permission.STOP_APP_SWITCHES" />
     </privapp-permissions>
 </permissions>

@@ -11,7 +11,7 @@
 
     <PreferenceCategory title="@string/m_dock">
         <SwitchPreference key="kashi_dock_enable" title="@string/m_add_a_dock_to"
-            summary="@string/m_launcher_drawn_background_behind_sum" defaultValue="true" />
+            summary="@string/m_launcher_drawn_background_behind_sum" defaultValue="false" />
         <SwitchPreference controls="kashi_dock_icon_offset" title="@string/m_dock_icon_vertical_offset"
             summary="@string/m_negative_moves_the_icons_sum" />
         <SeekBarPreference key="kashi_dock_icon_offset" title="@string/m_icon_offset" min="-60" max="30" defaultValue="0"

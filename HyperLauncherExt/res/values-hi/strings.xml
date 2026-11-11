@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">इस या किसी अन्य डिवाइस पर एक्सपोर्ट किया गया प्रीसेट लागू करें</string>
     <string name="g_reset_parameters">पैरामीटर रीसेट करें</string>
     <string name="g_back_to_the_system_sum">सिस्टम मानों पर वापस जाएं</string>
+    <string name="search_default">लॉन्चर डिफ़ॉल्ट</string>
+    <string name="search_default_sub">लॉन्चर के सर्च बार का अपना व्यवहार</string>
+    <string name="search_set_default">सर्च बार अब लॉन्चर का डिफ़ॉल्ट व्यवहार इस्तेमाल करता है</string>
 </resources>

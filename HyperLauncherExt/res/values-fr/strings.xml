@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">Appliquer un préréglage exporté sur cet appareil ou un autre</string>
     <string name="g_reset_parameters">Réinitialiser les paramètres</string>
     <string name="g_back_to_the_system_sum">Revenir aux valeurs système</string>
+    <string name="search_default">Par défaut du lanceur</string>
+    <string name="search_default_sub">Comportement d\'origine de la barre de recherche</string>
+    <string name="search_set_default">La barre de recherche utilise le comportement par défaut</string>
 </resources>

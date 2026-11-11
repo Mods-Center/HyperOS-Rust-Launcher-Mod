@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">Terapkan preset yang diekspor dari perangkat ini atau perangkat lain</string>
     <string name="g_reset_parameters">Atur ulang parameter</string>
     <string name="g_back_to_the_system_sum">Kembali ke nilai sistem</string>
+    <string name="search_default">Bawaan launcher</string>
+    <string name="search_default_sub">Perilaku bilah pencarian bawaan launcher</string>
+    <string name="search_set_default">Bilah pencarian memakai perilaku bawaan</string>
 </resources>

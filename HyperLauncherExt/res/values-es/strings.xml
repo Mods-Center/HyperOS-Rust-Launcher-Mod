@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">Aplica un preajuste exportado en este u otro dispositivo</string>
     <string name="g_reset_parameters">Restablecer parámetros</string>
     <string name="g_back_to_the_system_sum">Vuelve a los valores del sistema</string>
+    <string name="search_default">Predeterminado</string>
+    <string name="search_default_sub">Comportamiento original de la barra de búsqueda</string>
+    <string name="search_set_default">La barra de búsqueda usa el comportamiento predeterminado</string>
 </resources>

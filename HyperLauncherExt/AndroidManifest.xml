@@ -6,6 +6,8 @@
     <!-- clear the launcher cache after installing icon packs without root -->
     <uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!-- priv-app: start the picked search app without the 5 s app-switch delay after the Home gesture -->
+    <uses-permission android:name="android.permission.STOP_APP_SWITCHES" />
     <queries>
         <intent><action android:name="org.adw.launcher.THEMES" /></intent>
         <intent><action android:name="com.novalauncher.THEME" /></intent>

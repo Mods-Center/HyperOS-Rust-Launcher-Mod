@@ -47,7 +47,7 @@ public final class SettingsStore {
 
     /** Asks su for root (shows the root manager prompt); true when the shell really runs as uid 0. */
     public static boolean requestRoot() {
-        try { return su("echo KASHI_UID=$(id -u); exit 0", null).text().contains("KASHI_UID=0"); }
+        try { return isRootOutput(su("echo KASHI_UID=$(id -u); id; exit 0", null).text()); }
         catch (Exception e) { return false; }
     }
 
@@ -76,7 +76,7 @@ public final class SettingsStore {
 
     private OutputStream shell() throws Exception {
         if (shell == null || !shell.isAlive()) {
-            shell = new ProcessBuilder("su").redirectErrorStream(true).start();
+            shell = startSu();
             shellIn = shell.getOutputStream();
             final Process p = shell;
             new Thread(() -> { try { byte[] b = new byte[512]; while (p.getInputStream().read(b) >= 0) { } } catch (Exception ignored) { } }).start();
@@ -91,8 +91,37 @@ public final class SettingsStore {
         public String text() { return new String(out, StandardCharsets.UTF_8); }
     }
 
+    /** su binaries of Magisk, KernelSU, APatch and older managers; the first that starts is remembered. */
+    private static final String[] SU_PATHS = {"su", "/system/bin/su", "/system/xbin/su", "/debug_ramdisk/su", "/sbin/su",
+            "/data/adb/ksu/bin/su", "/data/adb/ap/bin/su", "/system_ext/bin/su", "/vendor/bin/su"};
+    private static volatile String suBin;
+
+    /** Starts su with the given arguments, trying every known su location (some managers do not put it on PATH). */
+    public static Process startSu(String... args) throws Exception {
+        Exception last = null;
+        String known = suBin;
+        for (String bin : known != null ? new String[] {known} : SU_PATHS) {
+            if (!bin.equals("su") && !new java.io.File(bin).exists()) continue;
+            try {
+                String[] cmd = new String[args.length + 1];
+                cmd[0] = bin;
+                System.arraycopy(args, 0, cmd, 1, args.length);
+                Process p = new ProcessBuilder(cmd).redirectErrorStream(true).start();
+                suBin = bin;
+                return p;
+            } catch (Exception e) { last = e; }
+        }
+        if (known != null) { suBin = null; return startSu(args); }
+        throw last != null ? last : new java.io.IOException("su not found");
+    }
+
+    /** True when su output proves uid 0 (our marker, or a plain `id` line). */
+    public static boolean isRootOutput(String out) {
+        return out.contains("KASHI_UID=0") || out.matches("(?s).*\\buid=0\\(.*");
+    }
+
     public static Result su(String script, byte[] stdin) throws Exception {
-        Process p = new ProcessBuilder("su", "-c", script).redirectErrorStream(true).start();
+        Process p = startSu("-c", script);
         if (stdin != null) p.getOutputStream().write(stdin);
         p.getOutputStream().close();
         Result r = new Result();
@@ -153,7 +182,7 @@ public final class SettingsStore {
             "kashi_dock_height", "kashi_home_qsb", "kashi_widget_resize", "kashi_paid_widgets", "kashi_grid_gap",
             "kashi_recents_blur", "kashi_recents_hide_clear", "kashi_icon_effect", "kashi_hide_any_app", "kashi_indicator_offset",
             "kashi_dock_icon_offset", "kashi_full_anim", "kashi_icon_bigger", "kashi_widget_source"};
-    public static final int[] HELPER_DEFAULTS = {1, 1, 30, 25, 0, 1, 1, 1, 0, 100, 0, 1, 1, 0, 0, 1, 0, 0};
+    public static final int[] HELPER_DEFAULTS = {0, 1, 30, 25, 0, 1, 1, 1, 0, 100, 0, 1, 1, 0, 0, 1, 0, 0};
     public static final String[] GLASS_KEYS = {"blur", "luminance", "saturation", "brightness", "alpha", "refraction",
             "thickness", "bg_saturation", "bg_brightness", "burn", "edge", "edge_feather", "reflection_offset", "light", "darker"};
 

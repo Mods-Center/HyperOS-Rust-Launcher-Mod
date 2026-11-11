@@ -27,10 +27,14 @@ public final class SearchModule implements Action {
 
     public static String selected(Context c) { return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY_PKG, GOOGLE); }
 
-    @Override public String value(Host host, PrefItem item) { return label(host.activity(), selected(host.activity())); }
+    /** kashi_home_qsb = 0: the launcher's own search bar behaviour (no redirect to SearchActivity). */
+    public static boolean isDefault(Host host) { return host.store().get("kashi_home_qsb", 1) == 0; }
+
+    @Override public String value(Host host, PrefItem item) {
+        return isDefault(host) ? L.s(host.activity(), "search_default") : label(host.activity(), selected(host.activity()));
+    }
 
     @Override public void run(Host host, PrefItem item) {
-        if (host.store().get("kashi_home_qsb", 1) == 0) host.store().put("kashi_home_qsb", 1);   // tap redirect always on
         Context c = host.activity();
         PackageManager pm = c.getPackageManager();
         Intent launch = new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
@@ -40,10 +44,14 @@ public final class SearchModule implements Action {
             if (!p.equals(c.getPackageName())) apps.put(ri.loadLabel(pm) + "\u0000" + p, p);
         }
         List<String> pkgs = new ArrayList<>(apps.values());
+        pkgs.add(0, null);                                     // first row: launcher default
         String[] names = new String[pkgs.size()], subs = new String[pkgs.size()];
         Drawable[] icons = new Drawable[pkgs.size()];
-        String cur = selected(c);
-        int sel = -1, k = 0;
+        String cur = isDefault(host) ? null : selected(c);
+        names[0] = L.s(c, "search_default");
+        subs[0] = L.s(c, "search_default_sub");
+        try { icons[0] = pm.getApplicationIcon(com.miui.home.kashi.ext.prefs.SettingsStore.LAUNCHER); } catch (Exception ignored) { }
+        int sel = cur == null ? 0 : -1, k = 1;
         for (Map.Entry<String, String> e : apps.entrySet()) {
             String p = e.getValue();
             names[k] = e.getKey().substring(0, e.getKey().indexOf('\u0000'));
@@ -54,6 +62,13 @@ public final class SearchModule implements Action {
             k++;
         }
         host.ui().sheet(L.s(c, "search_app_title"), names, subs, icons, sel, i -> {
+            if (i == 0) {
+                host.store().put("kashi_home_qsb", 0);
+                host.toast(L.s(c, "search_set_default"));
+                host.reloadPage();
+                return;
+            }
+            host.store().put("kashi_home_qsb", 1);
             c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY_PKG, pkgs.get(i)).apply();
             host.toast(L.s(c, "search_set", names[i]));
             host.reloadPage();

@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">Применить пресет, экспортированный на этом или другом устройстве</string>
     <string name="g_reset_parameters">Сбросить параметры</string>
     <string name="g_back_to_the_system_sum">Вернуть системные значения</string>
+    <string name="search_default">По умолчанию</string>
+    <string name="search_default_sub">Стандартное поведение строки поиска лаунчера</string>
+    <string name="search_set_default">Строка поиска работает как в лаунчере по умолчанию</string>
 </resources>

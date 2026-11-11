@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">Applica un preset esportato su questo o un altro dispositivo</string>
     <string name="g_reset_parameters">Ripristina parametri</string>
     <string name="g_back_to_the_system_sum">Torna ai valori di sistema</string>
+    <string name="search_default">Predefinito del launcher</string>
+    <string name="search_default_sub">Comportamento originale della barra di ricerca</string>
+    <string name="search_set_default">La barra di ricerca usa il comportamento predefinito</string>
 </resources>

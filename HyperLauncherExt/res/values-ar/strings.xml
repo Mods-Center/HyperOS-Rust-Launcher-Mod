@@ -167,4 +167,7 @@
     <string name="g_apply_a_preset_exported_sum">تطبيق إعداد مسبق تم تصديره على هذا الجهاز أو جهاز آخر</string>
     <string name="g_reset_parameters">إعادة تعيين المعلمات</string>
     <string name="g_back_to_the_system_sum">العودة إلى قيم النظام</string>
+    <string name="search_default">الافتراضي للمشغّل</string>
+    <string name="search_default_sub">سلوك شريط البحث الأصلي في المشغّل</string>
+    <string name="search_set_default">يستخدم شريط البحث السلوك الافتراضي</string>
 </resources>

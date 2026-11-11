@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.1
+
+- Dock background is now off by default; turn it on in HyperLauncherExt (Dock)
+- Search app list has a "Launcher default" entry that keeps the launcher's own search bar behaviour
+- Search bar opens the picked app without the 5-6 second delay
+- "Share" is back in the app icon long-press menu
+- Root detection works with more root managers (su outside PATH, KernelSU / APatch locations)
+- HyperLauncherExt 3.5
+
 ## v1.0
 
 First public release, for the HyperOS 4 launcher 8.01.02.9239.

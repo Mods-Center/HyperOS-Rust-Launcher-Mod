@@ -30,7 +30,7 @@ ships them in `.gnu_debugdata`).
 
 ## Native Dock
 
-Gates switch the launcher's own Dock background on. The material is chosen by redirecting the background's
+Gates switch the launcher's own Dock background on (off by default since v1.1: `kashi_dock_enable` = 1 turns it on). The material is chosen by redirecting the background's
 allocation stub to the system default, soft glass (`GlassOs4Background`) or advanced material
 (`MiuiXOs3BlurBackground`). Radius, horizontal margin, height and dock icon offset come from the data page.
 

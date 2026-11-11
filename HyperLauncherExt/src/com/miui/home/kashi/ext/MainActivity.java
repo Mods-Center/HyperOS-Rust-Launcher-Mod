@@ -298,11 +298,11 @@ public class MainActivity extends Activity implements Host {
                 String detail = null;
                 try {
                     // root is decided by the uid line only; the launcher check never fails the root check
-                    SettingsStore.Result r = SettingsStore.su("echo KASHI_UID=$(id -u); "
+                    SettingsStore.Result r = SettingsStore.su("echo KASHI_UID=$(id -u); id; "
                             + "p=$(pm path " + SettingsStore.LAUNCHER + " 2>/dev/null | head -n1 | cut -d: -f2); "
                             + "if [ -n \"$p\" ] && grep -q libkashidock.so \"$p\" 2>/dev/null; then echo KASHI_PATCHED; fi; exit 0", null);
                     String out = r.text();
-                    ok = out.contains("KASHI_UID=0");
+                    ok = SettingsStore.isRootOutput(out);
                     patched = out.contains("KASHI_PATCHED");
                     if (!ok) {
                         String t = out.replaceAll("KASHI_[A-Z]+=?\\S*", "").trim();
