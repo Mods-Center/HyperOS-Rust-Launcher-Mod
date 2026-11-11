@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">Aplikasi yang ditampilkan layar di kiri layar beranda. Google Discover memerlukan aplikasi Google. Mulai ulang launcher setelah mengubahnya</string>
     <string name="m_minus_screen_entries">Bawaan (ROM)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">Memerlukan root, atau ROM yang mengizinkan HyperLauncherExt menulis /data/system/theme. Ketuk untuk memberi root. Alasan tidak dapat ditulis: %1$s</string>
+    <string name="m_hidden_apps_system">Aplikasi tersembunyi HyperOS</string>
+    <string name="m_hidden_apps_system_sum">Fitur sembunyikan aplikasi bawaan HyperOS (aplikasi Keamanan): aplikasi tersembunyi dibuka dengan gestur, regangkan dua jari di layar utama</string>
 </resources>

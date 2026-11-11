@@ -24,7 +24,9 @@
   made the system copy fail with a signature mismatch; its data is kept
 - Module: genuine HyperOS 3 no longer passes the HyperOS 4 runtime check (it now also needs libmisqlite3 and
   librust_maml_sdk, which only HyperOS 4 has)
-- HyperLauncherExt 3.8.2
+- HyperLauncherExt: new "HyperOS hidden apps" row in Home screen: opens HyperOS's own app hiding (Security app; hidden
+  apps open with a pinch-out on the home screen); hidden on ROMs without that screen
+- HyperLauncherExt 3.8.3
 
 ## v1.0
 

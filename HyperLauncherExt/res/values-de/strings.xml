@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">Welche App der Bildschirm links vom Startbildschirm zeigt. Google Discover benötigt die Google-App. Starte den Launcher nach der Änderung neu</string>
     <string name="m_minus_screen_entries">Standard (ROM)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">Benötigt Root oder ein ROM, das HyperLauncherExt Schreibzugriff auf /data/system/theme erlaubt. Tippen, um Root zu gewähren. Warum nicht beschreibbar: %1$s</string>
+    <string name="m_hidden_apps_system">HyperOS: ausgeblendete Apps</string>
+    <string name="m_hidden_apps_system_sum">Das eingebaute Ausblenden von HyperOS (Sicherheits-App): ausgeblendete Apps öffnen per Geste, auf dem Startbildschirm mit zwei Fingern aufziehen</string>
 </resources>

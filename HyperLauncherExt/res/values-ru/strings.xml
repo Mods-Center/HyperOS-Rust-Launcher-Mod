@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">Какое приложение показывает экран слева от главного экрана. Для Google Discover нужно приложение Google. Перезапустите лаунчер после изменения</string>
     <string name="m_minus_screen_entries">По умолчанию (ROM)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">Нужен root или прошивка, разрешающая HyperLauncherExt запись в /data/system/theme. Нажмите, чтобы выдать root. Почему запись невозможна: %1$s</string>
+    <string name="m_hidden_apps_system">Скрытые приложения HyperOS</string>
+    <string name="m_hidden_apps_system_sum">Встроенное скрытие приложений HyperOS (приложение «Безопасность»): скрытые приложения открываются жестом, разведите два пальца на рабочем столе</string>
 </resources>

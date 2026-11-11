@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">Which app the screen to the left of the home screen shows. Google Discover needs the Google app. Restart the launcher after changing it</string>
     <string name="m_minus_screen_entries">Stock (ROM)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">Needs root, or a ROM that lets HyperLauncherExt write /data/system/theme. Tap to grant root. Why it\'s not writable: %1$s</string>
+    <string name="m_hidden_apps_system">HyperOS hidden apps</string>
+    <string name="m_hidden_apps_system_sum">HyperOS\'s own app hiding (Security app): hidden apps open with a gesture, pinch out on the home screen</string>
 </resources>

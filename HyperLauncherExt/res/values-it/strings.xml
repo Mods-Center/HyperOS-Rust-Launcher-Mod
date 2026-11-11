@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">Quale app mostra la schermata a sinistra della home. Google Discover richiede l\'app Google. Riavvia il launcher dopo la modifica</string>
     <string name="m_minus_screen_entries">Predefinito (ROM)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">Richiede il root, o una ROM che consenta a HyperLauncherExt di scrivere in /data/system/theme. Tocca per concedere il root. Perché non è scrivibile: %1$s</string>
+    <string name="m_hidden_apps_system">App nascoste di HyperOS</string>
+    <string name="m_hidden_apps_system_sum">L\'occultamento app integrato di HyperOS (app Sicurezza): le app nascoste si aprono con un gesto, allarga due dita nella schermata Home</string>
 </resources>

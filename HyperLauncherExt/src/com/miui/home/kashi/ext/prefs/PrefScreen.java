@@ -32,6 +32,7 @@ import java.util.Map;
  *     &lt;DropDownPreference key title entries="a|b" entryValues="0|1" defaultValue [summary]/&gt;
  *     &lt;Preference title [summary] action="id" | page="xml" [args="k=v;k=v"] [pageTitle] | url="https://…"
  *                 | component="pkg/cls" [intentAction]/&gt;          component: opens another app's screen
+ *   requires="component" on such a row hides it when the screen doesn't exist on this ROM
  * </pre>
  * Attributes may use ${arg} placeholders filled from the page arguments.
  */
@@ -118,6 +119,8 @@ public final class PrefScreen {
             String why = com.miui.home.kashi.ext.modules.IconPacks.themeWriteProblem();
             if (why != null) { rootNotice(it, card, L.s(host.activity(), "theme_blocked_sum", why)); return; }
         }
+        // component: the row opens another app's screen; hide it when this ROM doesn't have that screen
+        if ("component".equals(req) && !componentExists(it.attr("component"))) return;
         switch (it.tag) {
             case "SwitchPreference": switchRow(it, card); break;
             case "SeekBarPreference": sliderRow(it, card); break;
@@ -125,6 +128,13 @@ public final class PrefScreen {
             case "Preference": actionRow(it, card); break;
             default: break;
         }
+    }
+
+    private boolean componentExists(String component) {
+        android.content.ComponentName cn = component == null ? null : android.content.ComponentName.unflattenFromString(component);
+        if (cn == null) return false;
+        try { host.activity().getPackageManager().getActivityInfo(cn, 0); return true; }
+        catch (Exception e) { return false; }
     }
 
     private void switchRow(PrefItem it, LinearLayout card) {

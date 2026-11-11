@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">Ứng dụng hiển thị ở màn hình bên trái màn hình chính. Google Discover cần ứng dụng Google. Khởi động lại launcher sau khi thay đổi</string>
     <string name="m_minus_screen_entries">Mặc định (ROM)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">Cần root, hoặc ROM cho phép HyperLauncherExt ghi vào /data/system/theme. Chạm để cấp root. Lý do không ghi được: %1$s</string>
+    <string name="m_hidden_apps_system">Ứng dụng ẩn của HyperOS</string>
+    <string name="m_hidden_apps_system_sum">Tính năng ẩn ứng dụng có sẵn của HyperOS (ứng dụng Bảo mật): mở ứng dụng ẩn bằng cử chỉ, tách hai ngón tay trên màn hình chính</string>
 </resources>

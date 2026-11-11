@@ -35,6 +35,8 @@
             summary="@string/m_lists_every_app_on_sum" defaultValue="true" />
         <Preference title="@string/m_hide_apps" summary="@string/m_choose_which_app_icons_sum"
             component="com.miui.home/com.miui.home.settings.AllHideAppActivity" dependency="kashi_hide_any_app" />
+        <Preference title="@string/m_hidden_apps_system" summary="@string/m_hidden_apps_system_sum" requires="component"
+            component="com.miui.securitycenter/com.miui.privacyapps.ui.PrivacyAppsManageActivity" />
     </PreferenceCategory>
 
     <PreferenceCategory title="@string/m_recents">

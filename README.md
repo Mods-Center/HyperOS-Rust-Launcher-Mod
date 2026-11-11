@@ -69,7 +69,7 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
 - **-1 screen** choice on every ROM, CN included: ROM default, **App Vault** or **Google Discover** (needs the
   Google app)
 - **Share** in the app icon long-press menu: sends the app's APK through the system share sheet
-- **Hide any app** through the launcher's own Hide apps page
+- **Hide any app** through the launcher's own Hide apps page; shortcut to HyperOS's own hidden apps (Security app, opened with a pinch-out)
 - **Free widget resizing**: every widget can be resized in both directions, down to one cell
 - Paid / theme-store widgets usable
 - Choose the widget picker: MIUI App Vault or Global App Vault

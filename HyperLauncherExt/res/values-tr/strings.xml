@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">Ana ekranın solundaki ekranın hangi uygulamayı göstereceği. Google Discover için Google uygulaması gerekir. Değiştirdikten sonra başlatıcıyı yeniden başlatın</string>
     <string name="m_minus_screen_entries">Varsayılan (ROM)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">Root veya HyperLauncherExt\'in /data/system/theme klasörüne yazmasına izin veren bir ROM gerekir. Root vermek için dokunun. Neden yazılamıyor: %1$s</string>
+    <string name="m_hidden_apps_system">HyperOS gizli uygulamalar</string>
+    <string name="m_hidden_apps_system_sum">HyperOS\'un kendi uygulama gizleme özelliği (Güvenlik uygulaması): gizli uygulamalar bir hareketle açılır, ana ekranda iki parmağınızı açın</string>
 </resources>

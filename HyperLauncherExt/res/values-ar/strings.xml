@@ -177,4 +177,6 @@
     <string name="m_minus_screen_sum">التطبيق الذي تعرضه الشاشة على يسار الشاشة الرئيسية. يتطلب Google Discover تطبيق Google. أعد تشغيل المشغّل بعد التغيير</string>
     <string name="m_minus_screen_entries">افتراضي (الروم)|App Vault|Google Discover</string>
     <string name="theme_blocked_sum">يتطلب الروت، أو رومًا يسمح لـ HyperLauncherExt بالكتابة في ‎/data/system/theme. اضغط لمنح الروت. سبب تعذّر الكتابة: %1$s</string>
+    <string name="m_hidden_apps_system">التطبيقات المخفية في HyperOS</string>
+    <string name="m_hidden_apps_system_sum">إخفاء التطبيقات المدمج في HyperOS (تطبيق الأمان): تُفتح التطبيقات المخفية بإيماءة، باعد إصبعيك على الشاشة الرئيسية</string>
 </resources>
