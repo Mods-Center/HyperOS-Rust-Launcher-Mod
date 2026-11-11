@@ -1,4 +1,13 @@
+<div align="center">
+
 # HyperOS 4 Rust Launcher Mod
+
+[![Release](https://img.shields.io/github/v/release/Mods-Center/HyperOS-Rust-Launcher-Mod?style=for-the-badge&label=release&color=0a84ff)](https://github.com/Mods-Center/HyperOS-Rust-Launcher-Mod/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/Mods-Center/HyperOS-Rust-Launcher-Mod/total?style=for-the-badge&color=30d158)](https://github.com/Mods-Center/HyperOS-Rust-Launcher-Mod/releases)
+[![Stars](https://img.shields.io/github/stars/Mods-Center/HyperOS-Rust-Launcher-Mod?style=for-the-badge&color=ffd60a)](https://github.com/Mods-Center/HyperOS-Rust-Launcher-Mod/stargazers)
+[![Telegram](https://img.shields.io/badge/Telegram-channel-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/kashis_cringey_stuffs)
+
+</div>
 
 A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, base **8.01.02.9239**) plus
 **HyperLauncherExt**, a settings app that configures it live. It's delivered as a Magisk / KernelSU / APatch module.
@@ -17,16 +26,20 @@ HyperLauncherExt, under the direction of the mod author, who tested every build 
 possible; please report them with a log (HyperLauncherExt has a diagnostics page).
 
 ## Screenshots
-<img width="1184" height="2547" alt="1001119836" src="https://github.com/user-attachments/assets/ebc307e2-e53e-467a-a462-b919fb941720" />
-<img width="1184" height="2547" alt="1001119837" src="https://github.com/user-attachments/assets/1667bea4-917d-4eb6-8e7e-e75e742afac1" />
-<img width="1184" height="2547" alt="1001119835" src="https://github.com/user-attachments/assets/2bcffe04-7fce-4426-a0ef-98cbc5dc3938" />
-<img width="1184" height="2547" alt="1001119834" src="https://github.com/user-attachments/assets/d1f05c59-1243-46d4-8648-5f309d3ebe4c" />
-<img width="1184" height="2547" alt="1001119843" src="https://github.com/user-attachments/assets/78c71228-fdf2-4a72-8d9f-0c5ce7519bcf" />
-<img width="1184" height="2547" alt="1001119840" src="https://github.com/user-attachments/assets/111b8de8-4310-4379-bb3c-38dca40daadb" />
-<img width="1184" height="2547" alt="1001119842" src="https://github.com/user-attachments/assets/e3907855-97d8-481f-86f8-cd381ddba73f" />
-<img width="1184" height="2547" alt="1001119841" src="https://github.com/user-attachments/assets/03b21a37-5c37-4444-bb30-ed7739499dd9" />
-<img width="1184" height="2547" alt="1001119839" src="https://github.com/user-attachments/assets/e4ad1a00-62c3-412d-ac3a-a6efe21bf90c" />
-<img width="1184" height="2547" alt="1001119838" src="https://github.com/user-attachments/assets/3d0a07d4-989d-463f-a7dd-9df58ae6a250" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ebc307e2-e53e-467a-a462-b919fb941720" width="23%" alt="Rust Launcher"/>
+  <img src="https://github.com/user-attachments/assets/1667bea4-917d-4eb6-8e7e-e75e742afac1" width="23%" alt="Rust Launcher"/>
+  <img src="https://github.com/user-attachments/assets/2bcffe04-7fce-4426-a0ef-98cbc5dc3938" width="23%" alt="Rust Launcher"/>
+  <img src="https://github.com/user-attachments/assets/d1f05c59-1243-46d4-8648-5f309d3ebe4c" width="23%" alt="Rust Launcher"/>
+  <br/>
+  <img src="https://github.com/user-attachments/assets/78c71228-fdf2-4a72-8d9f-0c5ce7519bcf" width="23%" alt="Rust Launcher"/>
+  <img src="https://github.com/user-attachments/assets/111b8de8-4310-4379-bb3c-38dca40daadb" width="23%" alt="Rust Launcher"/>
+  <img src="https://github.com/user-attachments/assets/e3907855-97d8-481f-86f8-cd381ddba73f" width="23%" alt="Rust Launcher"/>
+  <img src="https://github.com/user-attachments/assets/03b21a37-5c37-4444-bb30-ed7739499dd9" width="23%" alt="Rust Launcher"/>
+  <br/>
+  <img src="https://github.com/user-attachments/assets/e4ad1a00-62c3-412d-ac3a-a6efe21bf90c" width="23%" alt="Rust Launcher"/>
+  <img src="https://github.com/user-attachments/assets/3d0a07d4-989d-463f-a7dd-9df58ae6a250" width="23%" alt="Rust Launcher"/>
+</p>
 
 ## Features
 
@@ -170,3 +183,13 @@ See [NOTICE.md](NOTICE.md) for licensing and third-party notices.
 
 Not affiliated with or endorsed by Xiaomi. HyperOS, MIUI and the launcher are Xiaomi's property. You use this mod at
 your own risk; keep a backup and a way to remove modules from recovery or safe mode.
+
+---
+
+<div align="center">
+
+Made by **[Kashi](https://t.me/kakashi1v1)** · part of **[Mods Center](https://github.com/Mods-Center)**
+
+[📢 Channel](https://t.me/kashis_cringey_stuffs) · [💬 Support group](https://t.me/bootloop_discussion) · [🐞 Report a bug](https://github.com/Mods-Center/HyperOS-Rust-Launcher-Mod/issues)
+
+</div>
