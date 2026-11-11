@@ -170,4 +170,6 @@
     <string name="search_default">लॉन्चर डिफ़ॉल्ट</string>
     <string name="search_default_sub">लॉन्चर के सर्च बार का अपना व्यवहार</string>
     <string name="search_set_default">सर्च बार अब लॉन्चर का डिफ़ॉल्ट व्यवहार इस्तेमाल करता है</string>
+    <string name="share_app_title">%1$s शेयर करें</string>
+    <string name="share_failed">यह ऐप शेयर नहीं हो सका</string>
 </resources>

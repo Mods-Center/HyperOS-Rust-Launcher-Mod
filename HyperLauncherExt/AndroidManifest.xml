@@ -39,5 +39,20 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- launcher long-press "Share": patched SEND action -> share the APK through the system share sheet -->
+        <activity android:name=".ShareActivity" android:exported="true" android:excludeFromRecents="true"
+            android:noHistory="true" android:taskAffinity="" android:theme="@style/KashiTrampoline">
+            <intent-filter>
+                <action android:name="com.miui.home.kashi.ext.SH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.miui.home.kashi.ext.SH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <provider android:name=".ApkProvider" android:authorities="com.miui.home.kashi.ext.apk"
+            android:exported="false" android:grantUriPermissions="true" />
     </application>
 </manifest>

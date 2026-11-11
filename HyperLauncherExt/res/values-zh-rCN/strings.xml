@@ -170,4 +170,6 @@
     <string name="search_default">桌面默认</string>
     <string name="search_default_sub">使用桌面自带的搜索栏行为</string>
     <string name="search_set_default">搜索栏已恢复桌面默认行为</string>
+    <string name="share_app_title">分享 %1$s</string>
+    <string name="share_failed">无法分享此应用</string>
 </resources>

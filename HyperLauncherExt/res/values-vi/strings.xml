@@ -170,4 +170,6 @@
     <string name="search_default">Mặc định của launcher</string>
     <string name="search_default_sub">Hành vi thanh tìm kiếm gốc của launcher</string>
     <string name="search_set_default">Thanh tìm kiếm dùng hành vi mặc định</string>
+    <string name="share_app_title">Chia sẻ %1$s</string>
+    <string name="share_failed">Không thể chia sẻ ứng dụng này</string>
 </resources>

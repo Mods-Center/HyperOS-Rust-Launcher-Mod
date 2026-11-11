@@ -170,4 +170,6 @@
     <string name="search_default">الافتراضي للمشغّل</string>
     <string name="search_default_sub">سلوك شريط البحث الأصلي في المشغّل</string>
     <string name="search_set_default">يستخدم شريط البحث السلوك الافتراضي</string>
+    <string name="share_app_title">مشاركة %1$s</string>
+    <string name="share_failed">تعذّرت مشاركة هذا التطبيق</string>
 </resources>

@@ -170,4 +170,6 @@
     <string name="search_default">Predefinito del launcher</string>
     <string name="search_default_sub">Comportamento originale della barra di ricerca</string>
     <string name="search_set_default">La barra di ricerca usa il comportamento predefinito</string>
+    <string name="share_app_title">Condividi %1$s</string>
+    <string name="share_failed">Impossibile condividere l\'app</string>
 </resources>

@@ -170,4 +170,6 @@
     <string name="search_default">Launcher-Standard</string>
     <string name="search_default_sub">Eigenes Verhalten der Launcher-Suchleiste</string>
     <string name="search_set_default">Die Suchleiste nutzt das Standardverhalten</string>
+    <string name="share_app_title">%1$s teilen</string>
+    <string name="share_failed">Die App konnte nicht geteilt werden</string>
 </resources>

@@ -7,9 +7,12 @@
 - With Google as the search app, the search bar, pull-down and swipe-up search open Google directly from the launcher
   (no helper screen, no delay); other apps open through HyperLauncherExt without the 5-6 second delay
 - No black bars at the screen edges when the search bar opens an app
-- "Share" is back in the app icon long-press menu
+- "Share" is back in the app icon long-press menu and shares the app's APK through the system share sheet
+- Swipe-down search opens the picked search app (no Xiaomi search app needed), and the swipe-up gesture settings list
+  "Search" when a search app is picked
+- The capsule search bar is the default on first boot on every ROM
 - Root detection works with more root managers (su outside PATH, KernelSU / APatch locations)
-- HyperLauncherExt 3.6
+- HyperLauncherExt 3.7
 
 ## v1.0
 

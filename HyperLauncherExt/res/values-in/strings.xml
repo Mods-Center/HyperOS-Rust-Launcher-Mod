@@ -170,4 +170,6 @@
     <string name="search_default">Bawaan launcher</string>
     <string name="search_default_sub">Perilaku bilah pencarian bawaan launcher</string>
     <string name="search_set_default">Bilah pencarian memakai perilaku bawaan</string>
+    <string name="share_app_title">Bagikan %1$s</string>
+    <string name="share_failed">Tidak dapat membagikan aplikasi ini</string>
 </resources>

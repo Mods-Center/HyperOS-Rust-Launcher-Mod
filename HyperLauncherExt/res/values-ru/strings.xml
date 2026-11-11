@@ -170,4 +170,6 @@
     <string name="search_default">По умолчанию</string>
     <string name="search_default_sub">Стандартное поведение строки поиска лаунчера</string>
     <string name="search_set_default">Строка поиска работает как в лаунчере по умолчанию</string>
+    <string name="share_app_title">Поделиться: %1$s</string>
+    <string name="share_failed">Не удалось поделиться приложением</string>
 </resources>

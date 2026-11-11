@@ -170,4 +170,6 @@
     <string name="search_default">Launcher default</string>
     <string name="search_default_sub">The launcher\'s own search bar behaviour</string>
     <string name="search_set_default">Search bar uses the launcher\'s default behaviour</string>
+    <string name="share_app_title">Share %1$s</string>
+    <string name="share_failed">Could not share this app</string>
 </resources>

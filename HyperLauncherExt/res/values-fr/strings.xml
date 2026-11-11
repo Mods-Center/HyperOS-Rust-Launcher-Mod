@@ -170,4 +170,6 @@
     <string name="search_default">Par défaut du lanceur</string>
     <string name="search_default_sub">Comportement d\'origine de la barre de recherche</string>
     <string name="search_set_default">La barre de recherche utilise le comportement par défaut</string>
+    <string name="share_app_title">Partager %1$s</string>
+    <string name="share_failed">Impossible de partager cette appli</string>
 </resources>
