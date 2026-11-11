@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SearchActivity" android:exported="true" android:excludeFromRecents="true"
-            android:noHistory="true" android:taskAffinity="" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:noHistory="true" android:taskAffinity="" android:theme="@style/KashiTrampoline">
             <intent-filter>
                 <action android:name="com.miui.home.kashi.ext.SEARCH_OPEN" />
                 <action android:name="com.miui.home.kashi.ext.VOICE_GO" />

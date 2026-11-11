@@ -4,10 +4,12 @@
 
 - Dock background is now off by default; turn it on in HyperLauncherExt (Dock)
 - Search app list has a "Launcher default" entry that keeps the launcher's own search bar behaviour
-- Search bar opens the picked app without the 5-6 second delay
+- With Google as the search app, the search bar, pull-down and swipe-up search open Google directly from the launcher
+  (no helper screen, no delay); other apps open through HyperLauncherExt without the 5-6 second delay
+- No black bars at the screen edges when the search bar opens an app
 - "Share" is back in the app icon long-press menu
 - Root detection works with more root managers (su outside PATH, KernelSU / APatch locations)
-- HyperLauncherExt 3.5
+- HyperLauncherExt 3.6
 
 ## v1.0
 

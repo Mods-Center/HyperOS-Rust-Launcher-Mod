@@ -182,7 +182,7 @@ public final class SettingsStore {
             "kashi_dock_height", "kashi_home_qsb", "kashi_widget_resize", "kashi_paid_widgets", "kashi_grid_gap",
             "kashi_recents_blur", "kashi_recents_hide_clear", "kashi_icon_effect", "kashi_hide_any_app", "kashi_indicator_offset",
             "kashi_dock_icon_offset", "kashi_full_anim", "kashi_icon_bigger", "kashi_widget_source"};
-    public static final int[] HELPER_DEFAULTS = {0, 1, 30, 25, 0, 1, 1, 1, 0, 100, 0, 1, 1, 0, 0, 1, 0, 0};
+    public static final int[] HELPER_DEFAULTS = {0, 1, 30, 25, 0, 2, 1, 1, 0, 100, 0, 1, 1, 0, 0, 1, 0, 0};
     public static final String[] GLASS_KEYS = {"blur", "luminance", "saturation", "brightness", "alpha", "refraction",
             "thickness", "bg_saturation", "bg_brightness", "burn", "edge", "edge_feather", "reflection_offset", "light", "darker"};
 

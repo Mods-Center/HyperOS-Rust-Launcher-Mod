@@ -27,11 +27,18 @@ public final class SearchModule implements Action {
 
     public static String selected(Context c) { return c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY_PKG, GOOGLE); }
 
-    /** kashi_home_qsb = 0: the launcher's own search bar behaviour (no redirect to SearchActivity). */
-    public static boolean isDefault(Host host) { return host.store().get("kashi_home_qsb", 1) == 0; }
+    /** kashi_home_qsb: 0 launcher default, 1 picked app through SearchActivity, 2 Google opened by the launcher itself. */
+    public static boolean isDefault(Host host) { return host.store().get("kashi_home_qsb", 2) == 0; }
+
+    /** Launcher mode for a picked package: Google is opened natively (no trampoline, no delay). */
+    public static int modeFor(String pkg) { return GOOGLE.equals(pkg) ? 2 : 1; }
 
     @Override public String value(Host host, PrefItem item) {
-        return isDefault(host) ? L.s(host.activity(), "search_default") : label(host.activity(), selected(host.activity()));
+        if (isDefault(host)) return L.s(host.activity(), "search_default");
+        String pkg = selected(host.activity());
+        int mode = modeFor(pkg);   // migrate older installs (mode 1 for Google)
+        if (host.store().get("kashi_home_qsb", 2) != mode) host.store().put("kashi_home_qsb", mode);
+        return label(host.activity(), pkg);
     }
 
     @Override public void run(Host host, PrefItem item) {
@@ -68,7 +75,7 @@ public final class SearchModule implements Action {
                 host.reloadPage();
                 return;
             }
-            host.store().put("kashi_home_qsb", 1);
+            host.store().put("kashi_home_qsb", modeFor(pkgs.get(i)));
             c.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY_PKG, pkgs.get(i)).apply();
             host.toast(L.s(c, "search_set", names[i]));
             host.reloadPage();

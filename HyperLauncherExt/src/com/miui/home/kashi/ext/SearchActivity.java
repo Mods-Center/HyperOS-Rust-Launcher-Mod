@@ -21,6 +21,14 @@ public class SearchActivity extends Activity {
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state);
         overridePendingTransition(0, 0);
+        // edge to edge with transparent bars: nothing of this window may show while the target app starts
+        android.view.Window w = getWindow();
+        w.setDecorFitsSystemWindows(false);
+        w.addFlags(android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        w.setStatusBarColor(android.graphics.Color.TRANSPARENT);
+        w.setNavigationBarColor(android.graphics.Color.TRANSPARENT);
+        w.setStatusBarContrastEnforced(false);
+        w.setNavigationBarContrastEnforced(false);
     }
 
     // Started from onResume: once this activity is the resumed top activity its app counts as foreground, so the
@@ -34,7 +42,10 @@ public class SearchActivity extends Activity {
     }
 
     private void open() {
-        boolean voice = ACTION_VOICE.equals(getIntent().getAction());
+        // Since launcher mod 1.2 the text search also arrives as VOICE_GO (the GLOBAL_SEARCH text stays stock for the
+        // native Google mode); the launcher's text intent carries FLAG_ACTIVITY_CLEAR_TASK, its voice intent does not.
+        Intent in = getIntent();
+        boolean voice = ACTION_VOICE.equals(in.getAction()) && (in.getFlags() & Intent.FLAG_ACTIVITY_CLEAR_TASK) == 0;
         String pkg = SearchModule.selected(this);
         Intent target = SearchModule.resolve(this, pkg, voice);
         if (target == null && !SearchModule.GOOGLE.equals(pkg)) target = SearchModule.resolve(this, SearchModule.GOOGLE, voice);
