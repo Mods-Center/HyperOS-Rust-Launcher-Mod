@@ -56,6 +56,12 @@
             entries="@string/m_auto_rom_miui_app_list" entryValues="0|1|2" defaultValue="0" />
     </PreferenceCategory>
 
+    <PreferenceCategory title="@string/m_minus_screen">
+        <DropDownPreference key="kashi_minus_screen" title="@string/m_minus_screen_app"
+            summary="@string/m_minus_screen_sum"
+            entries="@string/m_minus_screen_entries" entryValues="0|1|2" defaultValue="0" />
+    </PreferenceCategory>
+
     <PreferenceCategory title="@string/m_soft_glass">
         <Preference title="@string/m_home_screen_glass" summary="@string/m_soft_glass_of_widgets_sum"
             page="prefs_glass" args="prefix=kashi_glass_home_;name=home" action="glass_state" prefix="kashi_glass_home_" />

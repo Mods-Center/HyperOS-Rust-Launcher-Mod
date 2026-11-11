@@ -17,7 +17,7 @@ rm -rf build; mkdir -p build/classes build/dex
 KEYSTORE=${KEYSTORE:-build/debug.keystore}
 aapt2 compile --dir res -o build/res.zip
 aapt2 link -o build/base.apk -I "$SDK" --manifest AndroidManifest.xml -R build/res.zip --auto-add-overlay \
-    --min-sdk-version 29 --target-sdk-version 29 --version-code 32 --version-name 3.7
+    --min-sdk-version 29 --target-sdk-version 29 --version-code 33 --version-name 3.8
 javac -nowarn --release 11 -cp "$SDK" -d build/classes $(find src -name '*.java') > build/javac.log 2>&1 \
     || { cat build/javac.log; echo 'javac failed'; exit 1; }
 d8 --lib "$SDK" --min-api 29 --output build/dex $(find build/classes -name '*.class')

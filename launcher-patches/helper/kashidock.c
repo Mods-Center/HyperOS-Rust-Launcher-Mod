@@ -28,13 +28,13 @@ __attribute__((weak)) extern uint64_t settings_secure_get_i32(void *resolver, co
 extern int __system_property_get(const char *name, char *value);
 
 static const char kMagic[16] = "KASHIDOCK2";
-enum { F_ENABLE, F_STYLE, F_RADIUS, F_PADDING, F_HEIGHT, F_QSB, F_WRESIZE, F_PAID, F_STYLES, F_RBLUR, F_HIDECLEAR, F_ICONFX, F_HIDEAPP, F_IOFF, F_DOFF, F_FULLANIM, F_ICONBIG, F_WSRC, F_COUNT };
+enum { F_ENABLE, F_STYLE, F_RADIUS, F_PADDING, F_HEIGHT, F_QSB, F_WRESIZE, F_PAID, F_STYLES, F_RBLUR, F_HIDECLEAR, F_ICONFX, F_HIDEAPP, F_IOFF, F_DOFF, F_FULLANIM, F_ICONBIG, F_WSRC, F_MINUS, F_COUNT };
 enum { MAX_FIELDS = 32 };
 static const char *const kKeys[F_COUNT] = {"kashi_dock_enable", "kashi_dock_style", "kashi_dock_radius",
     "kashi_dock_padding", "kashi_dock_height", "kashi_home_qsb", "kashi_widget_resize", "kashi_paid_widgets",
     "kashi_grid_gap", "kashi_recents_blur", "kashi_recents_hide_clear",
     "kashi_icon_effect", "kashi_hide_any_app", "kashi_indicator_offset", "kashi_dock_icon_offset", "kashi_full_anim",
-    "kashi_icon_bigger", "kashi_widget_source"};
+    "kashi_icon_bigger", "kashi_widget_source", "kashi_minus_screen"};
 
 // Soft glass (HyperChanger HGLS order): blur, then 14 SoftGlass adjustments. Per record (home, dock).
 enum { GLASS_PARAMS = 15, GLASS_KEYS = 2 * (GLASS_PARAMS + 1) };
@@ -77,6 +77,7 @@ struct page {            // must match patch_launcher.py
     uint64_t widget_source;          // 0 auto (ROM), 1 MIUI / CN App Vault, 2 Global App Vault
     int32_t defaults[MAX_FIELDS];   // build-time defaults, used when a key is not set
     double lift_px;                  // 0x140: capsule / dots lift in physical px (grid gives up this much height)
+    uint64_t minus;                  // 0x148: -1 screen, 0 stock, 1 App Vault, 2 Google Discover
 };
 
 static int clampi(int v, int lo, int hi) { return v < lo ? lo : v > hi ? hi : v; }
@@ -114,7 +115,7 @@ static void publish(struct page *p, const int32_t v[F_COUNT]) {
     n.radius = clampi(v[F_RADIUS], 0, 60); n.radius_on = enable && style;
     n.padding = clampi(v[F_PADDING], 0, 150); n.padding_on = enable && style;
     n.height = clampi(v[F_HEIGHT], -40, 150); n.height_on = v[F_HEIGHT] != 0;
-    n.qsb = v[F_QSB] != 0;
+    n.qsb = (uint64_t)clampi(v[F_QSB], 0, 2);   // 0 stock, 1 picked app (trampoline), 2 Google native
     // paid widgets + search bar styles are always on (no switches any more; old keys may still hold 0)
     n.widget_resize = v[F_WRESIZE] != 0; n.paid_unlock = 1; n.search_styles = 1;
     n.hide_clear = v[F_HIDECLEAR] != 0;
@@ -126,6 +127,7 @@ static void publish(struct page *p, const int32_t v[F_COUNT]) {
     n.full_anim = v[F_FULLANIM] != 0;
     n.icon_factor = 1.0 + clampi(v[F_ICONBIG], 0, 15) / 100.0;
     n.widget_source = (uint64_t)clampi(v[F_WSRC], 0, 2);
+    n.minus = (uint64_t)clampi(v[F_MINUS], 0, 2);
     {   // the grid code works in physical pixels, the keys are dp
         int dpi = g_dpi;
         if (dpi <= 0) { char b[92] = {0}; if (__system_property_get("ro.sf.lcd_density", b) > 0) dpi = atoi(b); }
@@ -142,10 +144,11 @@ static void publish(struct page *p, const int32_t v[F_COUNT]) {
     volatile uint64_t *d = (volatile uint64_t *)p, *s = (uint64_t *)&n;
     for (size_t i = 2; i < offsetof(struct page, defaults) / 8; ++i) d[i] = s[i];
     d[offsetof(struct page, lift_px) / 8] = s[offsetof(struct page, lift_px) / 8];
+    d[offsetof(struct page, minus) / 8] = s[offsetof(struct page, minus) / 8];
     mprotect(base, ps, PROT_READ);
-    LOGI("applied enable=%d style=%d radius=%d padding=%d height=%d iconsize=+%d%% indicator=%d lift=%dpx qsb=%d resize=%d iconfx=%d dockicon=%d fullanim=%d widgets=%d recentsblur=%d%% hideclear=%d hideapp=%d",
+    LOGI("applied enable=%d style=%d radius=%d padding=%d height=%d iconsize=+%d%% indicator=%d lift=%dpx qsb=%d resize=%d iconfx=%d dockicon=%d fullanim=%d widgets=%d recentsblur=%d%% hideclear=%d hideapp=%d minus=%d",
          enable, style, (int)n.radius, (int)n.padding, (int)n.height, (int)((n.icon_factor - 1.0) * 100 + 0.5), (int)n.ioff, (int)(n.lift_px + 0.5), (int)n.qsb, (int)n.widget_resize,
-         (int)n.icon_fx, (int)n.doff, (int)n.full_anim, (int)n.widget_source, (int)(n.rblur * 100 + 0.5), (int)n.hide_clear, (int)n.hide_app);
+         (int)n.icon_fx, (int)n.doff, (int)n.full_anim, (int)n.widget_source, (int)(n.rblur * 100 + 0.5), (int)n.hide_clear, (int)n.hide_app, (int)n.minus);
 }
 
 static void cache_path(char *out, size_t size) {

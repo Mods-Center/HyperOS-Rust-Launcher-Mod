@@ -172,4 +172,9 @@
     <string name="search_set_default">La barra di ricerca usa il comportamento predefinito</string>
     <string name="share_app_title">Condividi %1$s</string>
     <string name="share_failed">Impossibile condividere l\'app</string>
+    <string name="m_minus_screen">Schermata -1</string>
+    <string name="m_minus_screen_app">Schermata a sinistra della home</string>
+    <string name="m_minus_screen_sum">Quale app mostra la schermata a sinistra della home. Google Discover richiede l\'app Google. Riavvia il launcher dopo la modifica</string>
+    <string name="m_minus_screen_entries">Predefinito (ROM)|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">Richiede il root, o una ROM che consenta a HyperLauncherExt di scrivere in /data/system/theme. Tocca per concedere il root. Perché non è scrivibile: %1$s</string>
 </resources>

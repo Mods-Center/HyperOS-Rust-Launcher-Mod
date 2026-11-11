@@ -172,4 +172,9 @@
     <string name="search_set_default">Arama çubuğu varsayılan davranışı kullanıyor</string>
     <string name="share_app_title">%1$s paylaş</string>
     <string name="share_failed">Uygulama paylaşılamadı</string>
+    <string name="m_minus_screen">-1 ekranı</string>
+    <string name="m_minus_screen_app">Ana ekranın solundaki ekran</string>
+    <string name="m_minus_screen_sum">Ana ekranın solundaki ekranın hangi uygulamayı göstereceği. Google Discover için Google uygulaması gerekir. Değiştirdikten sonra başlatıcıyı yeniden başlatın</string>
+    <string name="m_minus_screen_entries">Varsayılan (ROM)|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">Root veya HyperLauncherExt\'in /data/system/theme klasörüne yazmasına izin veren bir ROM gerekir. Root vermek için dokunun. Neden yazılamıyor: %1$s</string>
 </resources>

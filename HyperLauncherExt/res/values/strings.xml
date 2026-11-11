@@ -172,4 +172,9 @@
     <string name="search_set_default">Search bar uses the launcher\'s default behaviour</string>
     <string name="share_app_title">Share %1$s</string>
     <string name="share_failed">Could not share this app</string>
+    <string name="m_minus_screen">-1 screen</string>
+    <string name="m_minus_screen_app">Screen left of home</string>
+    <string name="m_minus_screen_sum">Which app the screen to the left of the home screen shows. Google Discover needs the Google app. Restart the launcher after changing it</string>
+    <string name="m_minus_screen_entries">Stock (ROM)|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">Needs root, or a ROM that lets HyperLauncherExt write /data/system/theme. Tap to grant root. Why it\'s not writable: %1$s</string>
 </resources>

@@ -172,4 +172,9 @@
     <string name="search_set_default">Die Suchleiste nutzt das Standardverhalten</string>
     <string name="share_app_title">%1$s teilen</string>
     <string name="share_failed">Die App konnte nicht geteilt werden</string>
+    <string name="m_minus_screen">-1-Bildschirm</string>
+    <string name="m_minus_screen_app">Bildschirm links vom Startbildschirm</string>
+    <string name="m_minus_screen_sum">Welche App der Bildschirm links vom Startbildschirm zeigt. Google Discover benötigt die Google-App. Starte den Launcher nach der Änderung neu</string>
+    <string name="m_minus_screen_entries">Standard (ROM)|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">Benötigt Root oder ein ROM, das HyperLauncherExt Schreibzugriff auf /data/system/theme erlaubt. Tippen, um Root zu gewähren. Warum nicht beschreibbar: %1$s</string>
 </resources>

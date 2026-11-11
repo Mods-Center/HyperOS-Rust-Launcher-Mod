@@ -172,4 +172,9 @@
     <string name="search_set_default">Строка поиска работает как в лаунчере по умолчанию</string>
     <string name="share_app_title">Поделиться: %1$s</string>
     <string name="share_failed">Не удалось поделиться приложением</string>
+    <string name="m_minus_screen">Экран -1</string>
+    <string name="m_minus_screen_app">Экран слева от главного</string>
+    <string name="m_minus_screen_sum">Какое приложение показывает экран слева от главного экрана. Для Google Discover нужно приложение Google. Перезапустите лаунчер после изменения</string>
+    <string name="m_minus_screen_entries">По умолчанию (ROM)|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">Нужен root или прошивка, разрешающая HyperLauncherExt запись в /data/system/theme. Нажмите, чтобы выдать root. Почему запись невозможна: %1$s</string>
 </resources>

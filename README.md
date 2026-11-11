@@ -7,6 +7,15 @@ A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, ba
 > patches of the compiled Dart and Rust code, plus a small native helper (`libkashidock.so`) that reads the settings
 > written by HyperLauncherExt.
 
+## Built with AI
+
+Modding a Flutter launcher is very different from the usual smali work: the whole UI is compiled Dart (AOT machine
+code with no class names in the code itself), so every change means finding the right function in about 30 MB of
+ARM64 code and patching it by hand. Because of that difficulty, **this mod was made with heavy help from AI**
+(Claude by Anthropic): it reverse engineered the launcher, wrote the binary patches, the native helper and most of
+HyperLauncherExt, under the direction of the mod author, who tested every build on a real device. Bugs are
+possible; please report them with a log (HyperLauncherExt has a diagnostics page).
+
 ## Screenshots
 <img width="1184" height="2547" alt="1001119836" src="https://github.com/user-attachments/assets/ebc307e2-e53e-467a-a462-b919fb941720" />
 <img width="1184" height="2547" alt="1001119837" src="https://github.com/user-attachments/assets/1667bea4-917d-4eb6-8e7e-e75e742afac1" />
@@ -37,10 +46,16 @@ A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, ba
 ### Search
 - The search capsule, its mic icon, **pull-down search** and **swipe-up search** open the search app you pick
   (Google, ChatGPT, Perplexity, ...), on its search or voice screen when it has one
-- All search bar styles are available on every ROM
+- Works on CN ROMs too, **without the Xiaomi search app**; "Search" shows up in the swipe-up gesture options
+- **Google** opens directly from the launcher, with no helper screen and no delay; a "Launcher default" entry keeps
+  the stock behaviour
+- The capsule search bar is the default on first boot on every ROM, and all search bar styles are available
 - **Circle to Search** option on every region
 
 ### Home screen & widgets
+- **-1 screen** choice on every ROM, CN included: ROM default, **App Vault** or **Google Discover** (needs the
+  Google app)
+- **Share** in the app icon long-press menu: sends the app's APK through the system share sheet
 - **Hide any app** through the launcher's own Hide apps page
 - **Free widget resizing**: every widget can be resized in both directions, down to one cell
 - Paid / theme-store widgets usable
@@ -50,8 +65,8 @@ A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, ba
 - Icons **larger than the stock maximum** (extra size up to +15%)
 - HyperOS **icon highlight** (glass rim and light) on third-party icons too
 - **Themed (monochrome) icons** on every ROM
-- **Icon packs** from installable icon-pack apps, applied through the theme engine (needs root), with a refresh
-  for newly installed apps
+- **Icon packs** from installable icon-pack apps, applied through the theme engine (needs root, or a ROM rule; see
+  "For ROM builders"), with a refresh for newly installed apps
 - Shortcut to the launcher's own icon size and style page
 
 ### Recents & performance
@@ -67,6 +82,7 @@ A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, ba
 - Available in 13 languages: English, Arabic, Chinese (Simplified), French, German, Hindi, Indonesian, Italian,
   Portuguese (Brazil), Russian, Spanish, Turkish, Vietnamese
 - Diagnostics page showing the launcher helper's log
+- No background service: it only runs while you open it (or for a moment when a search app is launched)
 
 ## Requirements
 
@@ -116,6 +132,14 @@ precompiled policy (`precompiled_sepolicy` + `*.sha256` in vendor/odm), the chan
 the CIL files on the next boot. HyperLauncherExt detects the permission by itself, so the icon pack rows appear and
 work without root; it then clears the launcher cache through `DELETE_CACHE_FILES` (already in its allowlist).
 
+If the icon pack row still says root is needed, its text now shows the reason:
+
+| Reason shown | Fix |
+|---|---|
+| `app runs as untrusted_app` (or another domain) | install HyperLauncherExt in `priv-app` as above; with the platform key, write the rules for `platform_app` |
+| `/data/system/theme is mode 775` | the folder must be `0777` (`system_theme:system_theme`); SELinux rules can't override Unix permissions |
+| `SELinux denies priv_app ...` | the rules aren't loaded: check the CIL edit and that the precompiled policy was rebuilt |
+
 ## Repository layout
 
 | Path | What |
@@ -130,7 +154,8 @@ work without root; it then clears the launcher cache through `DELETE_CACHE_FILES
 - **[HyperChanger](https://github.com/ColdP/HyperChanger)** by ColdP (btm_m): reference and code implementation help
   for the native Dock, Dock materials, soft glass and launcher hooks (AGPL-3.0)
 - **Dynamic Installer** by @BlassGO: module installer framework
-- Claude (Anthropic): help with reverse engineering and code
+- **Claude** (Anthropic): reverse engineering, launcher patches, native helper and most of HyperLauncherExt (see
+  "Built with AI")
 
 See [NOTICE.md](NOTICE.md) for licensing and third-party notices.
 

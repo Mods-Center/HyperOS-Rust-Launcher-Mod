@@ -44,12 +44,37 @@ public final class IconPacks {
      * True when this app may write the theme folder itself: stock HyperOS only lets system daemons and Theme Manager
      * write theme_data_file, but a ROM can allow priv_app/platform_app (see the repo README). Writes a probe file.
      */
-    public static boolean canWriteThemeDirect() {
-        File probe = new File(new File(THEME_ICONS).getParentFile(), ".kashi_probe");
+    public static boolean canWriteThemeDirect() { return themeWriteProblem() == null; }
+
+    /**
+     * Why the theme folder is not writable without root (null when it is): the app's SELinux domain, the folder's
+     * Unix mode, or the denied write itself. Shown on the icon pack row so ROM builders can see which part is missing.
+     */
+    public static String themeWriteProblem() {
+        File dir = new File(THEME_ICONS).getParentFile();
+        String error = null;
+        File probe = new File(dir, ".kashi_probe");
         try (java.io.FileOutputStream o = new java.io.FileOutputStream(probe)) { o.write(0); }
-        catch (Exception e) { return false; }
-        probe.delete();
-        return true;
+        catch (Exception e) { error = String.valueOf(e.getMessage()); }
+        if (error == null) { probe.delete(); return null; }
+        String ctx = "?";
+        try (java.io.BufferedReader r = new java.io.BufferedReader(new java.io.FileReader("/proc/self/attr/current"))) {
+            ctx = r.readLine().replace("\0", "").trim();
+        } catch (Exception ignored) { }
+        String[] parts = ctx.split(":");
+        String domain = parts.length > 2 ? parts[2] : ctx;
+        if (!"priv_app".equals(domain) && !"platform_app".equals(domain))
+            return "app runs as " + domain + ", not priv_app: install HyperLauncherExt as a privileged system app (priv-app)";
+        try {
+            android.system.StructStat st = android.system.Os.stat(dir.getPath());
+            if ((st.st_mode & 0002) == 0)
+                return dir + " is mode " + Integer.toOctalString(st.st_mode & 0777) + " (uid " + st.st_uid
+                        + "): only its owner can write it, SELinux rules can't change that (needs 777)";
+        } catch (Exception e) {
+            return dir + ": " + e.getMessage() + " (" + domain + " can't reach the folder)";
+        }
+        return "SELinux denies " + domain + " writing theme_data_file: the allow rules for " + domain
+                + " are not active (" + error + ")";
     }
 
     public static final class Pack { public String pkg, label; public Drawable icon; }

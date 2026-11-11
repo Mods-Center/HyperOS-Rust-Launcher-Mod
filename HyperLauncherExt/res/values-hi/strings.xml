@@ -172,4 +172,9 @@
     <string name="search_set_default">सर्च बार अब लॉन्चर का डिफ़ॉल्ट व्यवहार इस्तेमाल करता है</string>
     <string name="share_app_title">%1$s शेयर करें</string>
     <string name="share_failed">यह ऐप शेयर नहीं हो सका</string>
+    <string name="m_minus_screen">-1 स्क्रीन</string>
+    <string name="m_minus_screen_app">होम के बाईं ओर की स्क्रीन</string>
+    <string name="m_minus_screen_sum">होम स्क्रीन के बाईं ओर की स्क्रीन कौन सा ऐप दिखाए। Google Discover के लिए Google ऐप ज़रूरी है। बदलने के बाद लॉन्चर रीस्टार्ट करें</string>
+    <string name="m_minus_screen_entries">डिफ़ॉल्ट (ROM)|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">रूट चाहिए, या ऐसा ROM जो HyperLauncherExt को /data/system/theme में लिखने दे। रूट देने के लिए टैप करें। लिख न पाने का कारण: %1$s</string>
 </resources>

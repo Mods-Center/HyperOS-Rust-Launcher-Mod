@@ -114,8 +114,10 @@ public final class PrefScreen {
         String req = it.attr("requires");
         if ("root".equals(req) && !store.hasRoot()) { rootNotice(it, card); return; }
         // theme: root, or a ROM that lets this app write /data/system/theme (icon packs)
-        if ("theme".equals(req) && !store.hasRoot()
-                && !com.miui.home.kashi.ext.modules.IconPacks.canWriteThemeDirect()) { rootNotice(it, card); return; }
+        if ("theme".equals(req) && !store.hasRoot()) {
+            String why = com.miui.home.kashi.ext.modules.IconPacks.themeWriteProblem();
+            if (why != null) { rootNotice(it, card, L.s(host.activity(), "theme_blocked_sum", why)); return; }
+        }
         switch (it.tag) {
             case "SwitchPreference": switchRow(it, card); break;
             case "SeekBarPreference": sliderRow(it, card); break;
@@ -209,8 +211,10 @@ public final class PrefScreen {
     }
 
     /** Placeholder for a root-only row while root is not granted (system-app mode): tapping asks for root. */
-    private void rootNotice(PrefItem it, LinearLayout card) {
-        ui.arrowRow(card, it.title(), L.s(host.activity(), "root_needed_sum"), L.s(host.activity(), "root_badge"), v -> {
+    private void rootNotice(PrefItem it, LinearLayout card) { rootNotice(it, card, L.s(host.activity(), "root_needed_sum")); }
+
+    private void rootNotice(PrefItem it, LinearLayout card, String summary) {
+        ui.arrowRow(card, it.title(), summary, L.s(host.activity(), "root_badge"), v -> {
             host.toast(L.s(host.activity(), "requesting_root"));
             store.io.execute(() -> {
                 boolean ok = SettingsStore.requestRoot();

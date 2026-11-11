@@ -172,4 +172,9 @@
     <string name="search_set_default">搜索栏已恢复桌面默认行为</string>
     <string name="share_app_title">分享 %1$s</string>
     <string name="share_failed">无法分享此应用</string>
+    <string name="m_minus_screen">负一屏</string>
+    <string name="m_minus_screen_app">主屏幕左侧页面</string>
+    <string name="m_minus_screen_sum">主屏幕左侧页面显示的应用。Google Discover 需要安装 Google 应用。更改后请重启桌面</string>
+    <string name="m_minus_screen_entries">默认（系统）|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">需要 root，或允许 HyperLauncherExt 写入 /data/system/theme 的 ROM。点按以授予 root。无法写入的原因：%1$s</string>
 </resources>

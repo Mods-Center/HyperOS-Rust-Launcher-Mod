@@ -172,4 +172,9 @@
     <string name="search_set_default">يستخدم شريط البحث السلوك الافتراضي</string>
     <string name="share_app_title">مشاركة %1$s</string>
     <string name="share_failed">تعذّرت مشاركة هذا التطبيق</string>
+    <string name="m_minus_screen">الشاشة -1</string>
+    <string name="m_minus_screen_app">الشاشة يسار الرئيسية</string>
+    <string name="m_minus_screen_sum">التطبيق الذي تعرضه الشاشة على يسار الشاشة الرئيسية. يتطلب Google Discover تطبيق Google. أعد تشغيل المشغّل بعد التغيير</string>
+    <string name="m_minus_screen_entries">افتراضي (الروم)|App Vault|Google Discover</string>
+    <string name="theme_blocked_sum">يتطلب الروت، أو رومًا يسمح لـ HyperLauncherExt بالكتابة في ‎/data/system/theme. اضغط لمنح الروت. سبب تعذّر الكتابة: %1$s</string>
 </resources>
