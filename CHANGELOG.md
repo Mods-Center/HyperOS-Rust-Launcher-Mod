@@ -11,12 +11,12 @@
 - Swipe-down and swipe-up search open the picked search app, also on CN ROMs without the Xiaomi search app (the
   swipe-up gesture settings list "Search" when a search app is picked)
 - New "-1 screen" choice in HyperLauncherExt: ROM default, App Vault or Google Discover (needs the Google app), on
-  every ROM including CN
+  every ROM including CN (Google Discover works on CN ROMs too)
 - The capsule search bar is the default on first boot on every ROM
 - Root detection works with more root managers (su outside PATH, KernelSU / APatch locations)
 - Icon packs: when the theme folder isn't writable without root, the row now says why (SELinux domain, folder
   permissions or missing rules)
-- HyperLauncherExt 3.8
+- HyperLauncherExt 3.8.2
 
 ## v1.0
 

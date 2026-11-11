@@ -56,7 +56,23 @@ public final class SettingsStore {
         return p != null ? p : Settings.System.getInt(ctx.getContentResolver(), key, def);
     }
 
+    /** -1 screen choice -> the launcher's own Settings.System switch_personal_assistant value (0 = leave the ROM's). */
+    static final String[] MINUS_VALUES = {null, "personal_assistant_app_vault", "personal_assistant_google"};
+
+    public void putSystemString(String key, String value) {
+        io.execute(() -> {
+            if (directWrite) {
+                try { if (Settings.System.putString(ctx.getContentResolver(), key, value)) return; }
+                catch (Exception e) { directWrite = false; }
+            }
+            try { shell().write(("settings put system " + key + " " + value + "\n").getBytes(StandardCharsets.UTF_8)); shellIn.flush(); }
+            catch (Exception e) { shell = null; listener.onError(L.s(ctx, "save_no_permission")); }
+        });
+    }
+
     public void put(String key, int value) {
+        if ("kashi_minus_screen".equals(key) && value > 0 && value < MINUS_VALUES.length)
+            putSystemString("switch_personal_assistant", MINUS_VALUES[value]);
         pending.put(key, value);
         io.execute(() -> {
             if (directWrite) {
