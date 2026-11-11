@@ -93,7 +93,9 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
   `librust_maml_sdk`). If neither
   is found it asks before installing (Vol+ install / Vol- cancel).
 - **HyperOS 3 is not supported.** This launcher needs the HyperOS 4 Flutter engine and Rust runtime; on HyperOS 3
-  the module stops and asks before installing.
+  the module stops and asks before installing. If you want to try it on HyperOS 3 anyway, the experimental
+  [HyperOS 3 Rust Bridge](https://github.com/kakashi-1v1/HyperOS3-Rust-Bridge) adds the missing runtime pieces; read
+  its status page first (some HyperOS 4 effects don't work there), and flash the bridge before this module.
 - Magisk, KernelSU or APatch.
 - **Signature verification disabled** (core patch) on stock ROMs. The patched launcher can't carry Xiaomi's
   signature.
