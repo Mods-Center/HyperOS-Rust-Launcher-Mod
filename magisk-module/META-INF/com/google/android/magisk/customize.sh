@@ -128,6 +128,13 @@ install_launcher() {
 }
 
 install_ext() {
+    ext_pkg="com.miui.home.kashi.ext"
+    # A copy in /data (an APK installed by hand, or a build signed with another key) shadows or conflicts with the
+    # system app ("signature mismatch", app disabled). Remove it but keep its data (-k).
+    pm uninstall-system-updates "$ext_pkg" >/dev/null 2>&1
+    if pm path "$ext_pkg" 2>/dev/null | grep -q '^package:/data/'; then
+        pm uninstall -k "$ext_pkg" >/dev/null 2>&1 && ui_print "- Removed a separately installed HyperLauncherExt (its data and settings are kept)"
+    fi
     target="$MODPATH/system/product/priv-app/HyperLauncherExt/HyperLauncherExt.apk"
     mkdir -p "$(dirname "$target")"
     ui_print "- Installing HyperLauncherExt (settings app, system app: works without root)..."

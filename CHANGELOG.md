@@ -20,6 +20,8 @@
 - Three-layer blur (recents, app open/close) on every device while "Full animations" is on in HyperLauncherExt
 - HyperLauncherExt is signed with v1 + v2 + v3 signatures: fixes "INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION ...
   ArrayList cannot be cast to Certificate[]" when installing it by hand on some ROMs / signature-bypass setups
+- Module: removes a separately installed copy of HyperLauncherExt (installed by hand or signed with another key) that
+  made the system copy fail with a signature mismatch; its data is kept
 - Module: genuine HyperOS 3 no longer passes the HyperOS 4 runtime check (it now also needs libmisqlite3 and
   librust_maml_sdk, which only HyperOS 4 has)
 - HyperLauncherExt 3.8.2
