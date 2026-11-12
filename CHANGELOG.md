@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.2
+
+- App drawer search no longer closes the launcher when a number is typed (seen on some CN ROMs). A stock search
+  result widget raised a GetX error for number queries and the launcher's crash guard restarted it after a few errors;
+  the error is now ignored and the result is shown normally
+
 ## v1.1
 
 - Dock background is now off by default; turn it on in HyperLauncherExt (Dock)
