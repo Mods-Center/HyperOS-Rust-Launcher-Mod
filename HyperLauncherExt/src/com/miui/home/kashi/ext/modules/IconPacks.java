@@ -63,7 +63,9 @@ public final class IconPacks {
         } catch (Exception ignored) { }
         String[] parts = ctx.split(":");
         String domain = parts.length > 2 ? parts[2] : ctx;
-        if (!"priv_app".equals(domain) && !"platform_app".equals(domain))
+        // Android 16 versions the app domains (priv_app_36, platform_app_36): still privileged, the rules just have
+        // to name that exact domain
+        if (!domain.matches("(priv_app|platform_app)(_\\d+)?"))
             return "app runs as " + domain + ", not priv_app: install HyperLauncherExt as a privileged system app (priv-app)";
         try {
             android.system.StructStat st = android.system.Os.stat(dir.getPath());
@@ -73,8 +75,10 @@ public final class IconPacks {
         } catch (Exception e) {
             return dir + ": " + e.getMessage() + " (" + domain + " can't reach the folder)";
         }
-        return "SELinux denies " + domain + " writing theme_data_file: the allow rules for " + domain
-                + " are not active (" + error + ")";
+        String base = domain.replaceAll("_\\d+$", "");
+        return "SELinux denies " + domain + " writing theme_data_file: add the allow rules for " + domain
+                + (base.equals(domain) ? "" : " (this exact domain: rules for " + base + " don't cover it)")
+                + " (" + error + ")";
     }
 
     public static final class Pack { public String pkg, label; public Drawable icon; }

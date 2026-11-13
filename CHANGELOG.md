@@ -12,7 +12,10 @@
 - HyperLauncherExt works without root when it is built into a ROM as a system app with WRITE_SECURE_SETTINGS (it
   asked for root because it only checked the "modify system settings" permission). When saving still fails, the
   welcome screen shows the exact error so ROM builders can see what is missing
-- HyperLauncherExt 3.8.4
+- Icon packs without root: Android 16 runs privileged apps as `priv_app_36` (versioned domain); HyperLauncherExt
+  now accepts it and names the exact domain the ROM's SELinux rules must allow (rules for plain `priv_app` don't
+  cover `priv_app_36`, see the README)
+- HyperLauncherExt 3.8.5
 
 ## v1.1
 

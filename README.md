@@ -147,7 +147,15 @@ even platform-signed ones. To enable icon packs without root, add to `system_ext
 (allow priv_app theme_data_file (file (create read write open getattr setattr unlink rename)))
 ```
 
-Use `platform_app` instead of `priv_app` if you sign HyperLauncherExt with the ROM's platform key. If your ROM boots a
+On Android 16 (HyperOS 4) privileged apps run in a versioned domain, for example `priv_app_36`, and rules for
+`priv_app` don't cover it. Write the rules for the exact domain the icon pack row shows:
+
+```
+(allow priv_app_36 theme_data_file (dir (read write open getattr search add_name remove_name)))
+(allow priv_app_36 theme_data_file (file (create read write open getattr setattr unlink rename)))
+```
+
+Use `platform_app` (or `platform_app_36`) instead if you sign HyperLauncherExt with the ROM's platform key. If your ROM boots a
 precompiled policy (`precompiled_sepolicy` + `*.sha256` in vendor/odm), the changed hash makes init recompile it from
 the CIL files on the next boot. HyperLauncherExt detects the permission by itself, so the icon pack rows appear and
 work without root; it then clears the launcher cache through `DELETE_CACHE_FILES` (already in its allowlist).
@@ -158,7 +166,7 @@ If the icon pack row still says root is needed, its text now shows the reason:
 |---|---|
 | `app runs as untrusted_app` (or another domain) | install HyperLauncherExt in `priv-app` as above; with the platform key, write the rules for `platform_app` |
 | `/data/system/theme is mode 775` | the folder must be `0777` (`system_theme:system_theme`); SELinux rules can't override Unix permissions |
-| `SELinux denies priv_app ...` | the rules aren't loaded: check the CIL edit and that the precompiled policy was rebuilt |
+| `SELinux denies priv_app_36 ...` (any domain) | no rules for that exact domain are loaded: write them for the domain shown (on Android 16 `priv_app_36`, not `priv_app`), check the CIL edit and that the precompiled policy was rebuilt |
 
 ## Repository layout
 
