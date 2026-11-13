@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Precisa de root, ou de uma ROM que permita ao HyperLauncherExt gravar em /data/system/theme. Toque para conceder root. Por que não é gravável: %1$s</string>
     <string name="m_hidden_apps_system">Apps ocultos do HyperOS</string>
     <string name="m_hidden_apps_system_sum">O recurso de ocultar apps do próprio HyperOS (app Segurança): os apps ocultos abrem com um gesto, afaste dois dedos na tela inicial</string>
+    <string name="system_write_failed">Instalado como app do sistema, mas salvar as configurações sem root falhou: %1$s. Conceda WRITE_SECURE_SETTINGS (privapp-permissions) ou use root.</string>
 </resources>

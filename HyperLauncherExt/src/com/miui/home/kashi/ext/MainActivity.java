@@ -274,6 +274,12 @@ public class MainActivity extends Activity implements Host {
         LinearLayout card = ui.group(req, L.s(this, "req_title"));
         Ui.StatusRow rootRow = ui.statusRow(card, L.s(this, "req_root"), L.s(this, "req_root_sum"));
         Ui.StatusRow libRow = ui.statusRow(card, L.s(this, "req_patched"), L.s(this, "req_patched_sum"));
+        // installed as a system app (ROM builders): root shouldn't be needed, so say why saving didn't work
+        if ((getApplicationInfo().flags & android.content.pm.ApplicationInfo.FLAG_SYSTEM) != 0 && store.directWriteProblem() != null) {
+            TextView why = ui.label(L.s(this, "system_write_failed", store.directWriteProblem()), 13, ui.summary, false);
+            why.setPadding(ui.dp(24), ui.dp(4), ui.dp(24), ui.dp(8));
+            card.addView(why, new LinearLayout.LayoutParams(-1, -2));
+        }
         LinearLayout note = ui.group(req, null);
         TextView why = ui.label(L.s(this, "welcome_why"), 13, ui.summary, false);
         why.setPadding(ui.dp(16), ui.dp(14), ui.dp(16), ui.dp(14));

@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">需要 root，或允许 HyperLauncherExt 写入 /data/system/theme 的 ROM。点按以授予 root。无法写入的原因：%1$s</string>
     <string name="m_hidden_apps_system">HyperOS 隐藏应用</string>
     <string name="m_hidden_apps_system_sum">HyperOS 自带的应用隐藏（手机管家）：在桌面双指张开即可打开隐藏的应用</string>
+    <string name="system_write_failed">已作为系统应用安装，但无 root 保存设置失败：%1$s。请授予 WRITE_SECURE_SETTINGS（privapp-permissions）或使用 root。</string>
 </resources>

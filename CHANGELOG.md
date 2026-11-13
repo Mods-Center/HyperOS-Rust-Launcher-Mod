@@ -2,9 +2,17 @@
 
 ## v1.2
 
+2026-11-13
+
 - App drawer search no longer closes the launcher when a number is typed (seen on some CN ROMs). A stock search
   result widget raised a GetX error for number queries and the launcher's crash guard restarted it after a few errors;
   the error is now ignored and the result is shown normally
+- Swipe up on the home screen opens the picked search app only when the launcher's own swipe-up setting is "Search"
+  (it opened search even with "None" selected)
+- HyperLauncherExt works without root when it is built into a ROM as a system app with WRITE_SECURE_SETTINGS (it
+  asked for root because it only checked the "modify system settings" permission). When saving still fails, the
+  welcome screen shows the exact error so ROM builders can see what is missing
+- HyperLauncherExt 3.8.4
 
 ## v1.1
 

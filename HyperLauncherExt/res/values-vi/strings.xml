@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Cần root, hoặc ROM cho phép HyperLauncherExt ghi vào /data/system/theme. Chạm để cấp root. Lý do không ghi được: %1$s</string>
     <string name="m_hidden_apps_system">Ứng dụng ẩn của HyperOS</string>
     <string name="m_hidden_apps_system_sum">Tính năng ẩn ứng dụng có sẵn của HyperOS (ứng dụng Bảo mật): mở ứng dụng ẩn bằng cử chỉ, tách hai ngón tay trên màn hình chính</string>
+    <string name="system_write_failed">Đã cài dưới dạng ứng dụng hệ thống nhưng lưu cài đặt không cần root thất bại: %1$s. Hãy cấp WRITE_SECURE_SETTINGS (privapp-permissions) hoặc dùng root.</string>
 </resources>

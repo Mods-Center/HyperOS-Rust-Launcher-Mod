@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Нужен root или прошивка, разрешающая HyperLauncherExt запись в /data/system/theme. Нажмите, чтобы выдать root. Почему запись невозможна: %1$s</string>
     <string name="m_hidden_apps_system">Скрытые приложения HyperOS</string>
     <string name="m_hidden_apps_system_sum">Встроенное скрытие приложений HyperOS (приложение «Безопасность»): скрытые приложения открываются жестом, разведите два пальца на рабочем столе</string>
+    <string name="system_write_failed">Установлено как системное приложение, но сохранить настройки без root не удалось: %1$s. Выдайте WRITE_SECURE_SETTINGS (privapp-permissions) или используйте root.</string>
 </resources>

@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Richiede il root, o una ROM che consenta a HyperLauncherExt di scrivere in /data/system/theme. Tocca per concedere il root. Perché non è scrivibile: %1$s</string>
     <string name="m_hidden_apps_system">App nascoste di HyperOS</string>
     <string name="m_hidden_apps_system_sum">L\'occultamento app integrato di HyperOS (app Sicurezza): le app nascoste si aprono con un gesto, allarga due dita nella schermata Home</string>
+    <string name="system_write_failed">Installata come app di sistema, ma il salvataggio senza root non è riuscito: %1$s. Concedi WRITE_SECURE_SETTINGS (privapp-permissions) o usa il root.</string>
 </resources>

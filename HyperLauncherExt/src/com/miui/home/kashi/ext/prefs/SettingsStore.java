@@ -84,10 +84,22 @@ public final class SettingsStore {
         });
     }
 
+    /** Why the root-free write failed (null = it worked or wasn't tried), shown to system-app installs. */
+    private String directWriteProblem;
+    public String directWriteProblem() { return directWriteProblem; }
+
+    /**
+     * Root-free saving: just try the write. Settings.System.canWrite() only reflects the WRITE_SETTINGS app-op; a ROM
+     * that ships this app as priv-app usually grants WRITE_SECURE_SETTINGS instead, which SettingsProvider accepts too.
+     */
     private boolean probeDirectWrite() {
         try {
-            return Settings.System.canWrite(ctx) && Settings.System.putInt(ctx.getContentResolver(), "kashi_ext_probe", 1);
-        } catch (Exception e) { return false; }
+            if (Settings.System.putInt(ctx.getContentResolver(), "kashi_ext_probe", 1)) return true;
+            directWriteProblem = "Settings.System.putInt returned false";
+        } catch (Exception e) {
+            directWriteProblem = e.getClass().getSimpleName() + ": " + e.getMessage();
+        }
+        return false;
     }
 
     private OutputStream shell() throws Exception {

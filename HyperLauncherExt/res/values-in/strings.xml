@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Memerlukan root, atau ROM yang mengizinkan HyperLauncherExt menulis /data/system/theme. Ketuk untuk memberi root. Alasan tidak dapat ditulis: %1$s</string>
     <string name="m_hidden_apps_system">Aplikasi tersembunyi HyperOS</string>
     <string name="m_hidden_apps_system_sum">Fitur sembunyikan aplikasi bawaan HyperOS (aplikasi Keamanan): aplikasi tersembunyi dibuka dengan gestur, regangkan dua jari di layar utama</string>
+    <string name="system_write_failed">Terpasang sebagai aplikasi sistem, tetapi menyimpan pengaturan tanpa root gagal: %1$s. Berikan WRITE_SECURE_SETTINGS (privapp-permissions) atau gunakan root.</string>
 </resources>

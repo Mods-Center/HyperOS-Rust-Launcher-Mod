@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Needs root, or a ROM that lets HyperLauncherExt write /data/system/theme. Tap to grant root. Why it\'s not writable: %1$s</string>
     <string name="m_hidden_apps_system">HyperOS hidden apps</string>
     <string name="m_hidden_apps_system_sum">HyperOS\'s own app hiding (Security app): hidden apps open with a gesture, pinch out on the home screen</string>
+    <string name="system_write_failed">Installed as a system app, but saving settings without root failed: %1$s. Grant WRITE_SECURE_SETTINGS (privapp-permissions) or use root.</string>
 </resources>

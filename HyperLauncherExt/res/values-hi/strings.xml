@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">रूट चाहिए, या ऐसा ROM जो HyperLauncherExt को /data/system/theme में लिखने दे। रूट देने के लिए टैप करें। लिख न पाने का कारण: %1$s</string>
     <string name="m_hidden_apps_system">HyperOS छिपे हुए ऐप्स</string>
     <string name="m_hidden_apps_system_sum">HyperOS का अपना ऐप छिपाना (सिक्योरिटी ऐप): छिपे ऐप्स एक जेस्चर से खुलते हैं, होम स्क्रीन पर दो उंगलियाँ फैलाएँ</string>
+    <string name="system_write_failed">सिस्टम ऐप के रूप में इंस्टॉल है, लेकिन बिना रूट सेटिंग्स सेव नहीं हुईं: %1$s. WRITE_SECURE_SETTINGS (privapp-permissions) दें या रूट इस्तेमाल करें।</string>
 </resources>

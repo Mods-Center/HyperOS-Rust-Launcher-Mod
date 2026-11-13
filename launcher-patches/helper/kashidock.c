@@ -25,6 +25,9 @@ __attribute__((weak)) extern void *content_resolver_new(void *runtime_ref);
 __attribute__((weak)) extern void content_resolver_delete(void *resolver);
 __attribute__((weak)) extern uint64_t settings_system_get_i32(void *resolver, const char *name, size_t len);
 __attribute__((weak)) extern uint64_t settings_secure_get_i32(void *resolver, const char *name, size_t len);
+// abi_stable RString in an Option-like result: tag 0 = value; the vtable's 4th entry is the destructor (&mut RVec).
+struct kashi_rstr { uint8_t tag; uint8_t pad[7]; const char *ptr; size_t len; size_t cap; void *const *vt; };
+__attribute__((weak)) extern struct kashi_rstr settings_system_get_string(void *resolver, const char *name, size_t len);
 extern int __system_property_get(const char *name, char *value);
 
 static const char kMagic[16] = "KASHIDOCK2";
@@ -78,10 +81,16 @@ struct page {            // must match patch_launcher.py
     int32_t defaults[MAX_FIELDS];   // build-time defaults, used when a key is not set
     double lift_px;                  // 0x140: capsule / dots lift in physical px (grid gives up this much height)
     uint64_t minus;                  // 0x148: -1 screen, 0 stock, 1 App Vault, 2 Google Discover
+    uint64_t no_prestart;            // 0x150: 1 = runtime has no pre-startup animation (HyperOS 3 + bridge)
+    double os3_dim;                  // 0x158: patcher-owned (HyperOS 3 dimming factor), never written here
+    uint64_t tap_mark;               // 0x160: patcher-owned (HyperOS 3 recents tap marker), never written here
+    uint64_t slideup;                // 0x168: 1 = swipe-up opens the picked search app (search app picked and the
+                                     //        launcher's own swipe-up choice is "Search" or not set)
 };
 
 static int clampi(int v, int lo, int hi) { return v < lo ? lo : v > hi ? hi : v; }
 static int g_dpi = 0;              // display density (forced value first), 0 = unknown
+static int g_slide_search = 1;     // launcher_slideup_gesture is global_search (or unset)
 
 static struct page *find_page(void) {
     FILE *maps = fopen("/proc/self/maps", "re");
@@ -128,6 +137,11 @@ static void publish(struct page *p, const int32_t v[F_COUNT]) {
     n.icon_factor = 1.0 + clampi(v[F_ICONBIG], 0, 15) / 100.0;
     n.widget_source = (uint64_t)clampi(v[F_WSRC], 0, 2);
     n.minus = (uint64_t)clampi(v[F_MINUS], 0, 2);
+    n.slideup = n.qsb != 0 && g_slide_search;
+    // HyperOS 3 (Rust runtime 1.x via the bridge) has no pre-startup animation: a recents card tapped while the
+    // app->recents transition is still live gets merged into it and opens without animation. The launcher then
+    // finishes that transition to recents first (island at disallowActiveAppWindowFinish).
+    n.no_prestart = dlsym(RTLD_DEFAULT, "WindowManager_start_pre_startup_animation") == NULL;
     {   // the grid code works in physical pixels, the keys are dp
         int dpi = g_dpi;
         if (dpi <= 0) { char b[92] = {0}; if (__system_property_get("ro.sf.lcd_density", b) > 0) dpi = atoi(b); }
@@ -145,10 +159,12 @@ static void publish(struct page *p, const int32_t v[F_COUNT]) {
     for (size_t i = 2; i < offsetof(struct page, defaults) / 8; ++i) d[i] = s[i];
     d[offsetof(struct page, lift_px) / 8] = s[offsetof(struct page, lift_px) / 8];
     d[offsetof(struct page, minus) / 8] = s[offsetof(struct page, minus) / 8];
-    mprotect(base, ps, PROT_READ);
-    LOGI("applied enable=%d style=%d radius=%d padding=%d height=%d iconsize=+%d%% indicator=%d lift=%dpx qsb=%d resize=%d iconfx=%d dockicon=%d fullanim=%d widgets=%d recentsblur=%d%% hideclear=%d hideapp=%d minus=%d",
+    d[offsetof(struct page, no_prestart) / 8] = s[offsetof(struct page, no_prestart) / 8];
+    d[offsetof(struct page, slideup) / 8] = s[offsetof(struct page, slideup) / 8];
+    mprotect(base, ps, PROT_READ | PROT_WRITE);   // stays writable: HyperOS 3 recents islands keep a tap marker at 0x160
+    LOGI("applied enable=%d style=%d radius=%d padding=%d height=%d iconsize=+%d%% indicator=%d lift=%dpx qsb=%d resize=%d iconfx=%d dockicon=%d fullanim=%d widgets=%d recentsblur=%d%% hideclear=%d hideapp=%d minus=%d noprestart=%d slideup=%d",
          enable, style, (int)n.radius, (int)n.padding, (int)n.height, (int)((n.icon_factor - 1.0) * 100 + 0.5), (int)n.ioff, (int)(n.lift_px + 0.5), (int)n.qsb, (int)n.widget_resize,
-         (int)n.icon_fx, (int)n.doff, (int)n.full_anim, (int)n.widget_source, (int)(n.rblur * 100 + 0.5), (int)n.hide_clear, (int)n.hide_app, (int)n.minus);
+         (int)n.icon_fx, (int)n.doff, (int)n.full_anim, (int)n.widget_source, (int)(n.rblur * 100 + 0.5), (int)n.hide_clear, (int)n.hide_app, (int)n.minus, (int)n.no_prestart, (int)n.slideup);
 }
 
 static void cache_path(char *out, size_t size) {
@@ -227,7 +243,7 @@ static void glass_publish(struct page *page, const int32_t g[GLASS_KEYS]) {
             rec[0] = (g[base_i] != 0 && delta != 0) ? 1 : 0;
         }
     }
-    mprotect(base, ps, PROT_READ);
+    mprotect(base, ps, PROT_READ | PROT_WRITE);   // stays writable: HyperOS 3 recents islands keep a tap marker at 0x160
     LOGI("glass home=%d dock=%d", g[0], g[GLASS_PARAMS + 1]);
 }
 
@@ -245,6 +261,18 @@ static int read_settings(uintptr_t launcher, const int32_t defaults[F_COUNT], in
     if (settings_secure_get_i32) {
         const uint64_t r = settings_secure_get_i32(resolver, "display_density_forced", 22);
         g_dpi = (r & 1) ? 0 : (int)(r >> 32);
+    }
+    if (settings_system_get_string) {
+        // the launcher's own swipe-up choice: global_search / content_center / no_action (unset = default)
+        static const char key[] = "launcher_slideup_gesture";
+        struct kashi_rstr r = settings_system_get_string(resolver, key, sizeof key - 1);
+        if (r.tag == 0) {
+            g_slide_search = r.len == 13 && r.ptr && !memcmp(r.ptr, "global_search", 13);
+            // free it (abi_stable VecVTable: [0] field mask, [1] layout, [2] type id, [3] destructor)
+            if (r.vt && (uintptr_t)r.vt[0] < 0x100 && r.vt[3]) ((void (*)(void *))r.vt[3])(&r.ptr);
+        } else {
+            g_slide_search = 1;
+        }
     }
     for (int i = 0; i < GLASS_KEYS; ++i) {
         const uint64_t r = settings_system_get_i32(resolver, glass_keys[i], strlen(glass_keys[i]));
@@ -267,6 +295,8 @@ static void *worker(void *arg) {
     memcpy(defaults, page->defaults, sizeof defaults);
     _Static_assert(offsetof(struct page, defaults) == 0xc0, "page layout");
     _Static_assert(offsetof(struct page, lift_px) == 0x140, "page layout");
+    _Static_assert(offsetof(struct page, no_prestart) == 0x150, "page layout");
+    _Static_assert(offsetof(struct page, slideup) == 0x168, "page layout");
     memcpy(current, defaults, sizeof current);
     if (cache_load(v)) { publish(page, v); memcpy(current, v, sizeof current); }
     glass_init();
@@ -277,7 +307,9 @@ static void *worker(void *arg) {
     uintptr_t launcher = 0;
     for (unsigned tick = 0;; ++tick) {
         if (!launcher) dl_iterate_phdr(find_launcher, &launcher);
-        if (launcher && read_settings(launcher, defaults, v) && memcmp(v, current, sizeof v)) {
+        static int slide_published = -1;
+        if (launcher && read_settings(launcher, defaults, v) && (memcmp(v, current, sizeof v) || slide_published != g_slide_search)) {
+            slide_published = g_slide_search;
             publish(page, v);
             cache_save(v);
             memcpy(current, v, sizeof current);

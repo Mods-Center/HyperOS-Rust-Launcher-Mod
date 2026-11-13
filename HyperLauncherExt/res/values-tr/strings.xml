@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Root veya HyperLauncherExt\'in /data/system/theme klasörüne yazmasına izin veren bir ROM gerekir. Root vermek için dokunun. Neden yazılamıyor: %1$s</string>
     <string name="m_hidden_apps_system">HyperOS gizli uygulamalar</string>
     <string name="m_hidden_apps_system_sum">HyperOS\'un kendi uygulama gizleme özelliği (Güvenlik uygulaması): gizli uygulamalar bir hareketle açılır, ana ekranda iki parmağınızı açın</string>
+    <string name="system_write_failed">Sistem uygulaması olarak kurulu, ancak ayarlar root olmadan kaydedilemedi: %1$s. WRITE_SECURE_SETTINGS (privapp-permissions) verin veya root kullanın.</string>
 </resources>

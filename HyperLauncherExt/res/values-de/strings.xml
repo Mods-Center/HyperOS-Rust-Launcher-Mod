@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">Benötigt Root oder ein ROM, das HyperLauncherExt Schreibzugriff auf /data/system/theme erlaubt. Tippen, um Root zu gewähren. Warum nicht beschreibbar: %1$s</string>
     <string name="m_hidden_apps_system">HyperOS: ausgeblendete Apps</string>
     <string name="m_hidden_apps_system_sum">Das eingebaute Ausblenden von HyperOS (Sicherheits-App): ausgeblendete Apps öffnen per Geste, auf dem Startbildschirm mit zwei Fingern aufziehen</string>
+    <string name="system_write_failed">Als System-App installiert, aber das Speichern ohne Root ist fehlgeschlagen: %1$s. WRITE_SECURE_SETTINGS (privapp-permissions) erteilen oder Root verwenden.</string>
 </resources>

@@ -179,4 +179,5 @@
     <string name="theme_blocked_sum">يتطلب الروت، أو رومًا يسمح لـ HyperLauncherExt بالكتابة في ‎/data/system/theme. اضغط لمنح الروت. سبب تعذّر الكتابة: %1$s</string>
     <string name="m_hidden_apps_system">التطبيقات المخفية في HyperOS</string>
     <string name="m_hidden_apps_system_sum">إخفاء التطبيقات المدمج في HyperOS (تطبيق الأمان): تُفتح التطبيقات المخفية بإيماءة، باعد إصبعيك على الشاشة الرئيسية</string>
+    <string name="system_write_failed">مثبّت كتطبيق نظام، لكن حفظ الإعدادات بدون روت فشل: %1$s. امنح WRITE_SECURE_SETTINGS (privapp-permissions) أو استخدم الروت.</string>
 </resources>
