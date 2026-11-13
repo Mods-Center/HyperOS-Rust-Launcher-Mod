@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.3
+
+2026-11-13
+
+- Based on Xiaomi's new launcher 8.01.02.9248 (was 9239); every v1.2 change is carried over
+- Widgets can be added to the home screen while Google Discover is the -1 screen: "Add widget" opens the launcher's
+  own (Android) widget picker then, since App Vault's picker needs the App Vault connection that Google Discover
+  replaces. With App Vault or the ROM default as -1 screen nothing changes
+
 ## v1.2
 
 2026-11-13

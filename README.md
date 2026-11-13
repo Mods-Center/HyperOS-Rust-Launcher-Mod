@@ -9,7 +9,7 @@
 
 </div>
 
-A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, base **8.01.02.9239**) plus
+A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, base **8.01.02.9248**) plus
 **HyperLauncherExt**, a settings app that configures it live. It's delivered as a Magisk / KernelSU / APatch module.
 
 > HyperOS 4's launcher has no dex code, so it can't be modded with smali patches. All launcher changes are binary
