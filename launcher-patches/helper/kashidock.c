@@ -267,7 +267,18 @@ static int read_settings(uintptr_t launcher, const int32_t defaults[F_COUNT], in
         static const char key[] = "launcher_slideup_gesture";
         struct kashi_rstr r = settings_system_get_string(resolver, key, sizeof key - 1);
         if (r.tag == 0) {
-            g_slide_search = r.len == 13 && r.ptr && !memcmp(r.ptr, "global_search", 13);
+            // off only for values that clearly mean "none" / content center; anything else (the Rust launcher's
+            // own search item value, unknown values) keeps swipe-up search as before
+            static const char *const off[] = {"no_action", "none", "preference_desktop_slide_item_none",
+                                              "content_center", "preference_desktop_slide_item_content"};
+            int search = 1;
+            for (size_t i = 0; r.ptr && i < sizeof off / sizeof off[0]; ++i)
+                if (r.len == strlen(off[i]) && !memcmp(r.ptr, off[i], r.len)) search = 0;
+            static char last[64] = "";
+            char cur[64];
+            snprintf(cur, sizeof cur, "%.*s", (int)(r.len < 60 ? r.len : 60), r.ptr ? r.ptr : "");
+            if (strcmp(cur, last)) { LOGI("slideup gesture=\"%s\" -> search=%d", cur, search); strcpy(last, cur); }
+            g_slide_search = search;
             // free it (abi_stable VecVTable: [0] field mask, [1] layout, [2] type id, [3] destructor)
             if (r.vt && (uintptr_t)r.vt[0] < 0x100 && r.vt[3]) ((void (*)(void *))r.vt[3])(&r.ptr);
         } else {
