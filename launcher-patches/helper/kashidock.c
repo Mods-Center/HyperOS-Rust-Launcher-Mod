@@ -264,8 +264,11 @@ static int read_settings(uintptr_t launcher, const int32_t defaults[F_COUNT], in
     }
     if (settings_system_get_string) {
         // the launcher's own swipe-up choice: global_search / content_center / no_action (unset = default)
-        static const char key[] = "launcher_slideup_gesture";
+        // the Rust launcher stores it as com.miui.home.preferences.launcher_slideup_gesture (seen on device: no_action);
+        // the old Java launcher's key is the fallback
+        static const char key[] = "com.miui.home.preferences.launcher_slideup_gesture", old_key[] = "launcher_slideup_gesture";
         struct kashi_rstr r = settings_system_get_string(resolver, key, sizeof key - 1);
+        if (r.tag != 0) r = settings_system_get_string(resolver, old_key, sizeof old_key - 1);
         if (r.tag == 0) {
             // off only for values that clearly mean "none" / content center; anything else (the Rust launcher's
             // own search item value, unknown values) keeps swipe-up search as before
