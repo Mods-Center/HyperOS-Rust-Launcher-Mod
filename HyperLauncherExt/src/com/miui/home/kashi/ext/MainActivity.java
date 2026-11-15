@@ -190,9 +190,10 @@ public class MainActivity extends Activity implements Host {
             page.addView(sub);
         }
 
+        // blurred page copy that fades out below the bar (added before the bar, so the bar's title / buttons stay on top)
+        Ui.BlurFade glass = new Ui.BlurFade(ui, scroll, page);
+        root.addView(glass, Ui.frame(-1, ui.dp(56 + 44), Gravity.TOP));
         FrameLayout bar = new FrameLayout(this);
-        Ui.BlurBar glass = new Ui.BlurBar(ui, scroll, page);
-        bar.addView(glass, Ui.match());
         TextView small = ui.label(name, 17, ui.text, true);
         small.setGravity(Gravity.CENTER);
         small.setAlpha(0);

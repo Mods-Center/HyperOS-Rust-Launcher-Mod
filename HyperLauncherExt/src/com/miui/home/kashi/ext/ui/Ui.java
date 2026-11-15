@@ -610,13 +610,16 @@ public final class Ui {
         public final Paint tint = new Paint();
         public final Paint line = new Paint();
 
-        public BlurBar(Ui ui, ScrollView scroll, View content) {
+        public BlurBar(Ui ui, ScrollView scroll, View content) { this(ui, scroll, content, 24, 0xB8); }
+
+        /** radiusDp = blur radius, tintAlpha = 0..255 strength of the background-coloured frost over the blur. */
+        public BlurBar(Ui ui, ScrollView scroll, View content, float radiusDp, int tintAlpha) {
             super(ui.ctx);
             this.ui = ui; this.scroll = scroll; this.content = content;
-            tint.setColor((ui.bg & 0x00FFFFFF) | 0xB8000000);
+            tint.setColor((ui.bg & 0x00FFFFFF) | (tintAlpha << 24));
             line.setColor(ui.dark ? 0x22FFFFFF : 0x14000000);
             if (android.os.Build.VERSION.SDK_INT >= 31)
-                setRenderEffect(android.graphics.RenderEffect.createBlurEffect(ui.dp(24), ui.dp(24), android.graphics.Shader.TileMode.CLAMP));
+                setRenderEffect(android.graphics.RenderEffect.createBlurEffect(ui.dp(radiusDp), ui.dp(radiusDp), android.graphics.Shader.TileMode.CLAMP));
             setAlpha(0);
         }
 
@@ -633,6 +636,67 @@ public final class Ui {
         @Override protected void dispatchDraw(Canvas c) {
             super.dispatchDraw(c);
             c.drawRect(0, getHeight() - 1, getWidth(), getHeight(), line);
+        }
+    }
+
+    /**
+     * Progressive blur under the top bar: the blur gets gradually stronger towards the top. Several blurred copies of
+     * the page are stacked, weakest at the bottom; each stronger one covers less height and fades in over the one
+     * below it. Every copy draws into its own layer so the vertical mask (DST_IN) is applied after its blur.
+     */
+    public static final class BlurFade extends FrameLayout {
+        /** per level: blur radius dp, frost alpha, reach (fraction of this view's height, fully faded out there) */
+        private static final float[] RADIUS = {2f, 5f, 10f, 17f, 26f};
+        private static final int[] TINT = {0x18, 0x40, 0x70, 0x98, 0xB8};
+        private static final float[] REACH = {1.00f, 0.86f, 0.74f, 0.64f, 0.56f};
+        private final Level[] levels = new Level[RADIUS.length];
+
+        static final class Level extends FrameLayout {
+            final BlurBar blur;
+            final float reach;
+            private final Paint mask = new Paint();
+            private int maskHeight = -1;
+
+            Level(Ui ui, ScrollView scroll, View content, float radius, int tint, float reach) {
+                super(ui.ctx);
+                this.reach = reach;
+                blur = new BlurBar(ui, scroll, content, radius, tint);
+                blur.setAlpha(1);
+                blur.line.setColor(0);                        // no divider line
+                addView(blur, match());
+                mask.setXfermode(new android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.DST_IN));
+                setLayerType(LAYER_TYPE_HARDWARE, null);      // mask applies to this level's own layer
+                setWillNotDraw(false);
+            }
+
+            @Override protected void dispatchDraw(Canvas c) {
+                super.dispatchDraw(c);
+                int h = getHeight();
+                if (h != maskHeight) {
+                    maskHeight = h;
+                    float end = Math.max(0.05f, Math.min(1f, reach));
+                    // full strength over the top part, then a soft (eased) fade to nothing at `end`
+                    mask.setShader(new android.graphics.LinearGradient(0, 0, 0, h,
+                            new int[] {0xFF000000, 0xFF000000, 0xC0000000, 0x60000000, 0x18000000, 0x00000000},
+                            new float[] {0f, end * 0.45f, end * 0.64f, end * 0.80f, end * 0.92f, end},
+                            android.graphics.Shader.TileMode.CLAMP));
+                }
+                c.drawRect(0, 0, getWidth(), h, mask);
+            }
+        }
+
+        public BlurFade(Ui ui, ScrollView scroll, View content) {
+            super(ui.ctx);
+            for (int i = 0; i < levels.length; i++) {
+                levels[i] = new Level(ui, scroll, content, RADIUS[i], TINT[i], REACH[i]);
+                addView(levels[i], match());
+            }
+            setAlpha(0);
+        }
+
+        @Override public void invalidate() {
+            super.invalidate();
+            if (levels != null) for (Level l : levels) if (l != null) { l.invalidate(); l.blur.invalidate(); }
         }
     }
 

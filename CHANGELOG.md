@@ -14,6 +14,11 @@
 - HyperLauncherExt 3.9: settings for all of the above; Home screen backup (export / import the home screen setup,
   root); a warning with a download link when the Google app is not a privileged system app or not the default
   assistant
+- Recents fixes: "Hide the status bar" now really hides it (the launcher's own portrait check turned it back on at
+  once); "Hide app titles" hides only the app name and keeps the icon, also after the opening animation; the custom
+  corner radius is used from the start of the opening animation, and values of 30 dp and below work in the stack
+  layout
+- HyperLauncherExt: the top bar blur fades in gradually instead of a blurred strip
 - Module: HyperLauncherExt is now installed as a normal app (direct install) instead of a mounted system app. That
   fixes it not showing up, showing up as an icon-less stub, or closing right after opening on some root setups.
   It is reinstalled at boot if it goes missing, and removed together with the module. It needs root now (as a system
