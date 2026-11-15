@@ -171,3 +171,9 @@ install_ext
 clean_environment
 ui_print " "
 ui_print "- Done. Reboot, then open HyperLauncherExt app to configure the launcher."
+
+# --- Mods Center: KernelSU/APatch mount metamodule check ---
+[ -f "$MODPATH/kashi_mount_check.sh" ] || unzip -qjo "$ZIPFILE" "META-INF/com/google/android/magisk/kashi_mount_check.sh" -d "$MODPATH" >/dev/null 2>&1
+[ -f "$MODPATH/service.sh" ] || unzip -qjo "$ZIPFILE" "META-INF/com/google/android/magisk/service.sh" -d "$MODPATH" >/dev/null 2>&1
+chmod 0755 "$MODPATH/service.sh" 2>/dev/null
+[ -f "$MODPATH/kashi_mount_check.sh" ] && . "$MODPATH/kashi_mount_check.sh" && kashi_install_check
