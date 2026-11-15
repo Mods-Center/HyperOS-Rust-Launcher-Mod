@@ -161,27 +161,10 @@ install_ext() {
         ui_print "  ! it is retried after the reboot, or install files/HyperLauncherExt.apk from the zip by hand"
     fi
     cp -f "$apk" "$MODPATH/kashi_ext.apk"
-    # boot: reinstall when missing or older than the module's copy
-    cat > "$MODPATH/service.sh" <<'EOS'
-#!/system/bin/sh
-MODDIR=${0%/*}
-# Mods Center: warn in the root manager if module files are not mounted
-[ -f "$MODDIR/kashi_mount_check.sh" ] && { . "$MODDIR/kashi_mount_check.sh"; kashi_boot_check; } &
-P=com.miui.home.kashi.ext
-until [ "$(getprop sys.boot_completed)" = 1 ]; do sleep 5; done
-sleep 10
-[ -f "$MODDIR/kashi_ext.apk" ] || exit 0
-want=$(cat "$MODDIR/kashi_ext.ver" 2>/dev/null)
-have=$(dumpsys package "$P" 2>/dev/null | grep -m1 'versionCode=' | sed 's/.*versionCode=\([0-9]*\).*/\1/')
-if [ -z "$have" ] || { [ -n "$want" ] && [ "$have" -lt "$want" ]; }; then
-    sz=$(stat -c %s "$MODDIR/kashi_ext.apk")
-    cat "$MODDIR/kashi_ext.apk" | pm install -r -S "$sz" >/dev/null 2>&1
-fi
-EOS
-    cat > "$MODPATH/uninstall.sh" <<'EOS'
-#!/system/bin/sh
-pm uninstall com.miui.home.kashi.ext >/dev/null 2>&1
-EOS
+    # boot script (reinstall when missing or older) + uninstall script (removes the ext with the module)
+    for f in service.sh uninstall.sh kashi_mount_check.sh; do
+        unzip -qjo "$ZIPFILE" "META-INF/com/google/android/magisk/$f" -d "$MODPATH" >/dev/null 2>&1
+    done
     ver=$(dumpsys package "$ext_pkg" 2>/dev/null | grep -m1 'versionCode=' | sed 's/.*versionCode=\([0-9]*\).*/\1/')
     [ -n "$ver" ] && echo "$ver" > "$MODPATH/kashi_ext.ver"
     chmod 0755 "$MODPATH/service.sh"
