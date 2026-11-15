@@ -104,6 +104,15 @@ module_path() {
     esac
 }
 
+# pm reads the APK from stdin: system_server may not be allowed to open files under /data/adb (SELinux)
+kashi_pm_install() {   # <apk> -> prints pm output, returns 0 on Success
+    _sz=$(stat -c %s "$1" 2>/dev/null)
+    [ -n "$_sz" ] || return 1
+    _o=$(cat "$1" | pm install -r -S "$_sz" 2>&1)
+    echo "$_o"
+    echo "$_o" | grep -q '^Success'
+}
+
 install_launcher() {
     ui_print "- Locating the system launcher..."
     pm uninstall-system-updates "$LAUNCHER_PKG" >/dev/null 2>&1
@@ -122,24 +131,61 @@ install_launcher() {
     is_valid "$target" || abort "! Copying the launcher failed"
     # Also try a direct update (works when signature verification is disabled); stay silent when it fails,
     # the module copy is applied on reboot either way.
-    if pm install -r "$MODPATH/files/MiuiHome.apk" >/dev/null 2>&1; then
+    if kashi_pm_install "$MODPATH/files/MiuiHome.apk" >/dev/null 2>&1; then
         ui_print "- Launcher also updated directly"
     fi
 }
 
+# HyperLauncherExt is installed as a normal app (pm install), not as a mounted system app: mounting fails on some
+# root setups (no app at all, or an icon-less leftover). With root it does everything; the module's boot script
+# reinstalls it if it goes missing.
 install_ext() {
     ext_pkg="com.miui.home.kashi.ext"
-    # A copy in /data (an APK installed by hand, or a build signed with another key) shadows or conflicts with the
-    # system app ("signature mismatch", app disabled). Remove it but keep its data (-k).
-    pm uninstall-system-updates "$ext_pkg" >/dev/null 2>&1
-    if pm path "$ext_pkg" 2>/dev/null | grep -q '^package:/data/'; then
-        pm uninstall -k "$ext_pkg" >/dev/null 2>&1 && ui_print "- Removed a separately installed HyperLauncherExt (its data and settings are kept)"
+    apk="$MODPATH/files/HyperLauncherExt.apk"
+    is_valid "$apk" || abort "! HyperLauncherExt.apk missing in the zip"
+    ui_print "- Installing HyperLauncherExt (settings app)..."
+    out=$(kashi_pm_install "$apk")
+    if ! echo "$out" | grep -q '^Success'; then
+        case "$out" in
+            *UPDATE_INCOMPATIBLE*|*SIGNATURE*|*VERSION_DOWNGRADE*|*DUPLICATE*|*INCONSISTENT*)
+                ui_print "  replacing the installed copy (other signature or newer version)"
+                pm uninstall-system-updates "$ext_pkg" >/dev/null 2>&1
+                pm uninstall "$ext_pkg" >/dev/null 2>&1
+                out=$(kashi_pm_install "$apk") ;;
+        esac
     fi
-    target="$MODPATH/system/product/priv-app/HyperLauncherExt/HyperLauncherExt.apk"
-    mkdir -p "$(dirname "$target")"
-    ui_print "- Installing HyperLauncherExt (settings app, system app: works without root)..."
-    cp -f "$MODPATH/files/HyperLauncherExt.apk" "$target"
-    is_valid "$target" || abort "! Copying HyperLauncherExt failed"
+    if echo "$out" | grep -q '^Success'; then
+        ui_print "  installed"
+    else
+        ui_print "  ! direct install failed: $(echo "$out" | tail -n1)"
+        ui_print "  ! it is retried after the reboot, or install files/HyperLauncherExt.apk from the zip by hand"
+    fi
+    cp -f "$apk" "$MODPATH/kashi_ext.apk"
+    # boot: reinstall when missing or older than the module's copy
+    cat > "$MODPATH/service.sh" <<'EOS'
+#!/system/bin/sh
+MODDIR=${0%/*}
+# Mods Center: warn in the root manager if module files are not mounted
+[ -f "$MODDIR/kashi_mount_check.sh" ] && { . "$MODDIR/kashi_mount_check.sh"; kashi_boot_check; } &
+P=com.miui.home.kashi.ext
+until [ "$(getprop sys.boot_completed)" = 1 ]; do sleep 5; done
+sleep 10
+[ -f "$MODDIR/kashi_ext.apk" ] || exit 0
+want=$(cat "$MODDIR/kashi_ext.ver" 2>/dev/null)
+have=$(dumpsys package "$P" 2>/dev/null | grep -m1 'versionCode=' | sed 's/.*versionCode=\([0-9]*\).*/\1/')
+if [ -z "$have" ] || { [ -n "$want" ] && [ "$have" -lt "$want" ]; }; then
+    sz=$(stat -c %s "$MODDIR/kashi_ext.apk")
+    cat "$MODDIR/kashi_ext.apk" | pm install -r -S "$sz" >/dev/null 2>&1
+fi
+EOS
+    cat > "$MODPATH/uninstall.sh" <<'EOS'
+#!/system/bin/sh
+pm uninstall com.miui.home.kashi.ext >/dev/null 2>&1
+EOS
+    ver=$(dumpsys package "$ext_pkg" 2>/dev/null | grep -m1 'versionCode=' | sed 's/.*versionCode=\([0-9]*\).*/\1/')
+    [ -n "$ver" ] && echo "$ver" > "$MODPATH/kashi_ext.ver"
+    chmod 0755 "$MODPATH/service.sh"
+    chmod 0755 "$MODPATH/uninstall.sh"
 }
 
 clean_environment() {
@@ -170,7 +216,7 @@ install_launcher
 install_ext
 clean_environment
 ui_print " "
-ui_print "- Done. Reboot, then open HyperLauncherExt app to configure the launcher."
+ui_print "- Done. Reboot, then open the HyperLauncherExt app to configure the launcher (grant root when asked)."
 
 # --- Mods Center: KernelSU/APatch mount metamodule check ---
 [ -f "$MODPATH/kashi_mount_check.sh" ] || unzip -qjo "$ZIPFILE" "META-INF/com/google/android/magisk/kashi_mount_check.sh" -d "$MODPATH" >/dev/null 2>&1

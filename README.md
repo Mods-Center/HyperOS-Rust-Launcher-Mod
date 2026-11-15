@@ -97,8 +97,8 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
 ### HyperLauncherExt
 - miuix-style settings app with a collapsing blurred header, animations, and -/+ buttons, number entry and reset on
   every slider
-- Works **without root** when installed as a system app (the module does that). With root it can also apply icon
-  packs
+- The module installs it as a normal app and it works **with root**. Installed as a privileged system app (ROM
+  builders, see below) it works **without root**
 - Available in 13 languages: English, Arabic, Chinese (Simplified), French, German, Hindi, Indonesian, Italian,
   Portuguese (Brazil), Russian, Spanish, Turkish, Vietnamese
 - **Home screen backup**: export / import the home screen setup (icons, folders, widgets, pages, drawer) as one file (root)

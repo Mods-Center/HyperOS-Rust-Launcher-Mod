@@ -14,6 +14,10 @@
 - HyperLauncherExt 3.9: settings for all of the above; Home screen backup (export / import the home screen setup,
   root); a warning with a download link when the Google app is not a privileged system app or not the default
   assistant
+- Module: HyperLauncherExt is now installed as a normal app (direct install) instead of a mounted system app. That
+  fixes it not showing up, showing up as an icon-less stub, or closing right after opening on some root setups.
+  It is reinstalled at boot if it goes missing, and removed together with the module. It needs root now (as a system
+  app, for ROM builders, it still works without root)
 
 ## v1.3
 
