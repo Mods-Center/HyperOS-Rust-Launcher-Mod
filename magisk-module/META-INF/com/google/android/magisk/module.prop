@@ -1,6 +1,7 @@
 id=hyperos_rust_launcher_mod
 name=HyperOS 4 Launcher Mod (Rust/Flutter)
 version=v1.4
-versionCode=5
+versionCode=6
 author=🅺🅰🆂🅷🅸
 description=Patched HyperOS 4 launcher (native Dock, soft glass, search app, icons, widgets, recents) + HyperLauncherExt settings app. Telegram: https://t.me/kashis_cringey_stuffs
+updateJson=https://raw.githubusercontent.com/Mods-Center/HyperOS-Rust-Launcher-Mod/main/update.json
