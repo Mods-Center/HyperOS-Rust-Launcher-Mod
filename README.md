@@ -9,7 +9,7 @@
 
 </div>
 
-A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, base **8.01.02.9248**) plus
+A modded **HyperOS 4 system launcher** (the new Rust/Flutter `com.miui.home`, base **8.01.02.9258**) plus
 **HyperLauncherExt**, a settings app that configures it live. It's delivered as a Magisk / KernelSU / APatch module.
 
 > HyperOS 4's launcher has no dex code, so it can't be modded with smali patches. All launcher changes are binary
@@ -64,6 +64,8 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
   the stock behaviour
 - The capsule search bar is the default on first boot on every ROM, and all search bar styles are available
 - **Circle to Search** option on every region
+- **Swipe from a corner for the assistant**: the launcher's own switch (fullscreen gesture settings), normally only on
+  KDDI phones, is available everywhere
 
 ### Home screen & widgets
 - **-1 screen** choice on every ROM, CN included: ROM default, **App Vault** or **Google Discover** (needs the
@@ -71,6 +73,7 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
 - **Share** in the app icon long-press menu: sends the app's APK through the system share sheet
 - **Hide any app** through the launcher's own Hide apps page; shortcut to HyperOS's own hidden apps (Security app, opened with a pinch-out)
 - **Free widget resizing**: every widget can be resized in both directions, down to one cell
+- **Any widget on the App Vault -1 screen**: every widget and stack can be dragged there, all sizes
 - Paid / theme-store widgets usable
 - Choose the widget picker: MIUI App Vault or Global App Vault
 
@@ -86,7 +89,9 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
 - **Stack** recents layout on every device
 - Recents background blur strength (0-300%)
 - **Three-layer blur** (recents, app open/close) on every device while "Full animations" is on
-- Hide the clear-all button
+- Hide the clear-all button, the status bar and the app titles above the cards
+- Custom card corner radius (1-60 dp)
+- **App drawer blur** with its own switch (no longer tied to "Full animations")
 - **Full animations on every device**: lite and low-end device checks removed
 
 ### HyperLauncherExt
@@ -96,6 +101,9 @@ possible; please report them with a log (HyperLauncherExt has a diagnostics page
   packs
 - Available in 13 languages: English, Arabic, Chinese (Simplified), French, German, Hindi, Indonesian, Italian,
   Portuguese (Brazil), Russian, Spanish, Turkish, Vietnamese
+- **Home screen backup**: export / import the home screen setup (icons, folders, widgets, pages, drawer) as one file (root)
+- Warns when the Google app is not a privileged system app or not the default assistant (Circle to Search and
+  "Hey Google" need both) and links to the [Google App PrivApp](https://github.com/kakashi-1v1/Google-App-PrivApp) module
 - Diagnostics page showing the launcher helper's log
 - No background service: it only runs while you open it (or for a moment when a search app is launched)
 

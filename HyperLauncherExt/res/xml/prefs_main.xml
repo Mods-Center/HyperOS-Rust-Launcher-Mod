@@ -43,6 +43,12 @@
         <SeekBarPreference key="kashi_recents_blur" title="@string/m_background_blur_strength" min="0" max="300" defaultValue="100" unit="%"
             summary="@string/m_100_is_the_stock_sum" />
         <SwitchPreference key="kashi_recents_hide_clear" title="@string/m_hide_the_clear_all" defaultValue="false" />
+        <SwitchPreference key="kashi_recents_hide_statusbar" title="@string/m_recents_hide_sb" defaultValue="false" />
+        <SwitchPreference key="kashi_recents_hide_title" title="@string/m_recents_hide_title"
+            summary="@string/m_recents_hide_title_sum" defaultValue="false" />
+        <SwitchPreference controls="kashi_recents_radius" title="@string/m_recents_custom_radius" />
+        <SeekBarPreference key="kashi_recents_radius" title="@string/m_recents_radius" min="1" max="60" defaultValue="0"
+            zeroAs="24" unit="dp" dependency="@kashi_recents_radius" />
     </PreferenceCategory>
 
     <PreferenceCategory title="@string/m_search_bar">
@@ -87,6 +93,13 @@
     <PreferenceCategory title="@string/m_performance">
         <SwitchPreference key="kashi_full_anim" title="@string/m_full_animations_on_every"
             summary="@string/m_ignore_lite_and_low_sum" defaultValue="true" />
+        <SwitchPreference key="kashi_drawer_blur" title="@string/m_drawer_blur"
+            summary="@string/m_drawer_blur_sum" defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory title="@string/m_home_backup">
+        <Preference action="home_export" title="@string/m_home_export" summary="@string/m_home_export_sum" />
+        <Preference action="home_import" title="@string/m_home_import" summary="@string/m_home_import_sum" />
     </PreferenceCategory>
 
     <PreferenceCategory title="@string/m_about">

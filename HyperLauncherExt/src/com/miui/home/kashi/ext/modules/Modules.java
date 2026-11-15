@@ -22,6 +22,8 @@ public final class Modules {
         ACTIONS.put("glass_export", GlassModule.EXPORT);
         ACTIONS.put("glass_import", GlassModule.IMPORT);
         ACTIONS.put("glass_reset", GlassModule.RESET);
+        ACTIONS.put("home_export", HomeBackupModule.EXPORT);
+        ACTIONS.put("home_import", HomeBackupModule.IMPORT);
         ACTIONS.put("diagnostics", new AboutModule.Diagnostics());
         ACTIONS.put("version", new AboutModule.Version());
     }

@@ -31,13 +31,14 @@ __attribute__((weak)) extern struct kashi_rstr settings_system_get_string(void *
 extern int __system_property_get(const char *name, char *value);
 
 static const char kMagic[16] = "KASHIDOCK2";
-enum { F_ENABLE, F_STYLE, F_RADIUS, F_PADDING, F_HEIGHT, F_QSB, F_WRESIZE, F_PAID, F_STYLES, F_RBLUR, F_HIDECLEAR, F_ICONFX, F_HIDEAPP, F_IOFF, F_DOFF, F_FULLANIM, F_ICONBIG, F_WSRC, F_MINUS, F_COUNT };
+enum { F_ENABLE, F_STYLE, F_RADIUS, F_PADDING, F_HEIGHT, F_QSB, F_WRESIZE, F_PAID, F_STYLES, F_RBLUR, F_HIDECLEAR, F_ICONFX, F_HIDEAPP, F_IOFF, F_DOFF, F_FULLANIM, F_ICONBIG, F_WSRC, F_MINUS, F_RHIDESB, F_RHIDETITLE, F_RRADIUS, F_DBLUR, F_COUNT };
 enum { MAX_FIELDS = 32 };
 static const char *const kKeys[F_COUNT] = {"kashi_dock_enable", "kashi_dock_style", "kashi_dock_radius",
     "kashi_dock_padding", "kashi_dock_height", "kashi_home_qsb", "kashi_widget_resize", "kashi_paid_widgets",
     "kashi_grid_gap", "kashi_recents_blur", "kashi_recents_hide_clear",
     "kashi_icon_effect", "kashi_hide_any_app", "kashi_indicator_offset", "kashi_dock_icon_offset", "kashi_full_anim",
-    "kashi_icon_bigger", "kashi_widget_source", "kashi_minus_screen"};
+    "kashi_icon_bigger", "kashi_widget_source", "kashi_minus_screen",
+    "kashi_recents_hide_statusbar", "kashi_recents_hide_title", "kashi_recents_radius", "kashi_drawer_blur"};
 
 // Soft glass (HyperChanger HGLS order): blur, then 14 SoftGlass adjustments. Per record (home, dock).
 enum { GLASS_PARAMS = 15, GLASS_KEYS = 2 * (GLASS_PARAMS + 1) };
@@ -86,6 +87,10 @@ struct page {            // must match patch_launcher.py
     uint64_t tap_mark;               // 0x160: patcher-owned (HyperOS 3 recents tap marker), never written here
     uint64_t slideup;                // 0x168: 1 = swipe-up opens the picked search app (search app picked and the
                                      //        launcher's own swipe-up choice is "Search" or not set)
+    uint64_t rhide_sb;               // 0x170: 1 = recents hides the status bar
+    uint64_t rhide_title;            // 0x178: 1 = recents task titles hidden
+    double rradius;                  // 0x180: recents card corner radius dp, 0 = stock
+    uint64_t drawer_blur;            // 0x188: 1 = app drawer blur (independent of full_anim)
 };
 
 static int clampi(int v, int lo, int hi) { return v < lo ? lo : v > hi ? hi : v; }
@@ -138,6 +143,9 @@ static void publish(struct page *p, const int32_t v[F_COUNT]) {
     n.widget_source = (uint64_t)clampi(v[F_WSRC], 0, 2);
     n.minus = (uint64_t)clampi(v[F_MINUS], 0, 2);
     n.slideup = n.qsb != 0 && g_slide_search;
+    n.rhide_sb = v[F_RHIDESB] != 0; n.rhide_title = v[F_RHIDETITLE] != 0;
+    n.rradius = clampi(v[F_RRADIUS], 0, 60);
+    n.drawer_blur = v[F_DBLUR] != 0;
     // HyperOS 3 (Rust runtime 1.x via the bridge) has no pre-startup animation: a recents card tapped while the
     // app->recents transition is still live gets merged into it and opens without animation. The launcher then
     // finishes that transition to recents first (island at disallowActiveAppWindowFinish).
@@ -161,10 +169,14 @@ static void publish(struct page *p, const int32_t v[F_COUNT]) {
     d[offsetof(struct page, minus) / 8] = s[offsetof(struct page, minus) / 8];
     d[offsetof(struct page, no_prestart) / 8] = s[offsetof(struct page, no_prestart) / 8];
     d[offsetof(struct page, slideup) / 8] = s[offsetof(struct page, slideup) / 8];
+    d[offsetof(struct page, rhide_sb) / 8] = s[offsetof(struct page, rhide_sb) / 8];
+    d[offsetof(struct page, rhide_title) / 8] = s[offsetof(struct page, rhide_title) / 8];
+    d[offsetof(struct page, rradius) / 8] = s[offsetof(struct page, rradius) / 8];
+    d[offsetof(struct page, drawer_blur) / 8] = s[offsetof(struct page, drawer_blur) / 8];
     mprotect(base, ps, PROT_READ | PROT_WRITE);   // stays writable: HyperOS 3 recents islands keep a tap marker at 0x160
-    LOGI("applied enable=%d style=%d radius=%d padding=%d height=%d iconsize=+%d%% indicator=%d lift=%dpx qsb=%d resize=%d iconfx=%d dockicon=%d fullanim=%d widgets=%d recentsblur=%d%% hideclear=%d hideapp=%d minus=%d noprestart=%d slideup=%d",
+    LOGI("applied enable=%d style=%d radius=%d padding=%d height=%d iconsize=+%d%% indicator=%d lift=%dpx qsb=%d resize=%d iconfx=%d dockicon=%d fullanim=%d widgets=%d recentsblur=%d%% hideclear=%d hideapp=%d minus=%d noprestart=%d slideup=%d rsb=%d rtitle=%d rradius=%d drawerblur=%d",
          enable, style, (int)n.radius, (int)n.padding, (int)n.height, (int)((n.icon_factor - 1.0) * 100 + 0.5), (int)n.ioff, (int)(n.lift_px + 0.5), (int)n.qsb, (int)n.widget_resize,
-         (int)n.icon_fx, (int)n.doff, (int)n.full_anim, (int)n.widget_source, (int)(n.rblur * 100 + 0.5), (int)n.hide_clear, (int)n.hide_app, (int)n.minus, (int)n.no_prestart, (int)n.slideup);
+         (int)n.icon_fx, (int)n.doff, (int)n.full_anim, (int)n.widget_source, (int)(n.rblur * 100 + 0.5), (int)n.hide_clear, (int)n.hide_app, (int)n.minus, (int)n.no_prestart, (int)n.slideup, (int)n.rhide_sb, (int)n.rhide_title, (int)n.rradius, (int)n.drawer_blur);
 }
 
 static void cache_path(char *out, size_t size) {
@@ -311,6 +323,8 @@ static void *worker(void *arg) {
     _Static_assert(offsetof(struct page, lift_px) == 0x140, "page layout");
     _Static_assert(offsetof(struct page, no_prestart) == 0x150, "page layout");
     _Static_assert(offsetof(struct page, slideup) == 0x168, "page layout");
+    _Static_assert(offsetof(struct page, rradius) == 0x180, "page layout");
+    _Static_assert(offsetof(struct page, drawer_blur) == 0x188, "page layout");
     memcpy(current, defaults, sizeof current);
     if (cache_load(v)) { publish(page, v); memcpy(current, v, sizeof current); }
     glass_init();

@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.4
+
+2026-11-15
+
+- Based on Xiaomi's new launcher 8.01.02.9258 (was 9248); every v1.3 change is carried over
+- Any widget can be placed on the App Vault -1 screen: every widget size and widget stacks (before, only MIUI widgets
+  in some sizes were accepted)
+- Recents: hide the status bar, hide the app titles above the cards, custom card corner radius (1-60 dp)
+- App drawer blur has its own switch (on by default); "Full animations" no longer decides it
+- The launcher's "swipe from a corner for the assistant" switch (fullscreen gesture settings), normally KDDI only, is
+  unlocked on every phone
+- HyperLauncherExt 3.9: settings for all of the above; Home screen backup (export / import the home screen setup,
+  root); a warning with a download link when the Google app is not a privileged system app or not the default
+  assistant
+
 ## v1.3
 
 2026-11-13

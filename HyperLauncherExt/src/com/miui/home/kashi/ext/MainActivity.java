@@ -64,7 +64,10 @@ public class MainActivity extends Activity implements Host {
         stage.setBackgroundColor(ui.bg);
         setContentView(stage);
         // system/priv-app: settings work without root, so skip the root screen; root-only rows ask for it themselves
-        if (store.isDirectWrite() || store.hasRoot()) openPage("prefs_main", APP_NAME, null);
+        if (store.isDirectWrite() || store.hasRoot()) {
+            openPage("prefs_main", APP_NAME, null);
+            main.postDelayed(() -> com.miui.home.kashi.ext.modules.GoogleCheck.maybeWarn(this), 700);
+        }
         else showWelcome();
     }
 
